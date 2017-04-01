@@ -193,14 +193,14 @@ class Agent(object):
 		ret = self.env.take_step(step)
 		# time.sleep(2)
 		
-		if (env.game_lost()):
+		if (self.env.game_lost()):
 			self.game_status = -1
-		elif (env.game_won()):
+		elif (self.env.game_won):
 			self.game_status = 1
 
 		return self.game_status,self.reward_formulation(prev_score)
 
-	def reward_formulation(prev_score):
+	def reward_formulation(self, prev_score):
 		if (self.game_status == 0):
 			return self.env.score - prev_score
 		elif (self.game_status == 1):
