@@ -131,7 +131,8 @@ class Env(object):
 			self.print_state()
 
 		if (self.game_lost() == True):
-			print "GAME OVER"
+			if (debug_print):
+				print "GAME OVER"
 			return -1
 		else:
 			return 0

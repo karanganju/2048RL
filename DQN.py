@@ -32,10 +32,10 @@ class Replays(object):
 		self.s_new = np.zeros([self.cap, 16], dtype=int)
 
 	def sample(self):
-		ret_s = np.zeros([self.sample_size, 16])
-		ret_a = np.zeros([self.sample_size])
+		ret_s = np.zeros([self.sample_size, 16], dtype=int)
+		ret_a = np.zeros([self.sample_size], dtype=int)
 		ret_r = np.zeros([self.sample_size])
-		ret_s_new = np.zeros([self.sample_size, 16])
+		ret_s_new = np.zeros([self.sample_size, 16], dtype=int)
 
 		for i in xrange(self.sample_size):
 			r = 0
@@ -54,18 +54,18 @@ class Replays(object):
 		return ret_s, ret_a, ret_r, ret_s_new
 
 	# Much param naming such wow!
-	def add_instance(self, arr, x, y, arr2):
+	def add_instance(self, init_state, action, reward, next_state):
 		self.iter = self.iter+1
 		if (self.iter == self.cap):
 			self.filled = True
 			self.iter = 0
 		for i in xrange(16):
-			self.s[self.iter][i] = arr[i]
+			self.s[self.iter][i] = init_state[i]
 		for i in xrange(16):
-			self.s_new[self.iter][i] = arr[i]
-		# Take s,a instead of R+gamma*Q ?
-		self.r[self.iter] = y
-		self.a[self.iter] = x
+			self.s_new[self.iter][i] = next_state[i]
+
+		self.r[self.iter] = reward
+		self.a[self.iter] = action
 
 class DQN(object):
 
@@ -90,17 +90,17 @@ class DQN(object):
 
 			self.model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_squared_error'])
 
-	# I'm not sure this works! \-_-/
-	# Change of architecture -> Have to look at this. For now it is bs.
 	def run_through_replay(self):
-		if (replays.filled or replays.iter >= 512):
+		if (self.replays.filled or self.replays.iter >= 512):
 			s,a,r,s_new = replays.sample()
+			y = np.zeros([self.replays.sample_size, 4])
 			
 			for replay_iter in xrange(replay_iters):
 				sim_state = s_new[replay_iter][:].reshape(16)
-				r[replay_iter] += discount * Q_max(sim_state)
+				y[replay_iter] = self.model.predict(s[replay_iter].reshape([1,16]))
+				y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max(sim_state)
 
-			self.model.fit(s, r, nb_epoch=1, batch_size=bsize, verbose=0)
+			self.model.fit(s, y, nb_epoch=1, batch_size=bsize, verbose=0)
 
 	def select_epsilon_greedy(self, state):
 		act_taken = self.select_greedy(state)
@@ -137,7 +137,7 @@ if __name__ == '__main__':
 
 	while(1):
 
-		game = Env(True)
+		game = Env(False)
 		agent = Agent(game)
 
 		init_state = agent.get_array()
@@ -157,7 +157,6 @@ if __name__ == '__main__':
 
 			# Game over
 			if (game_state == -1 or game_state == 1):
-				print reward
 				print '{0:6d} {1:5d} {2:5d}'.format(game.score, game.max, iters)
 				break
 
