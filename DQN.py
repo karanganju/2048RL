@@ -18,6 +18,7 @@ bsize = 8
 save_stops = 50
 runs = 0
 runs_to_min_epsilon = 100
+copy_to_target_timeout = 1024
 
 class Replays(object):
 
@@ -72,23 +73,26 @@ class DQN(object):
 	def __init__(self, replay):
 		
 		self.replays = replay
+		self.model = self.create_model()
+		self.target_model = self.create_model()
 
+	def create_model(self):
 		if (read_model):
 			json_file = open('model.json', 'r')
 			loaded_model_json = json_file.read()
 			json_file.close()
-			self.model = model_from_json(loaded_model_json)
+			model = model_from_json(loaded_model_json)
 			# load weights into new model
-			self.model.load_weights("model.h5")
+			model.load_weights("model.h5")
 		else:
-			self.model = Sequential()
-			self.model.add(Dense(16, input_dim=16, init='uniform', activation='relu'))
-			self.model.add(Dense(9, init='uniform', activation='relu'))
-			self.model.add(Dense(9, init='uniform', activation='relu'))
-			self.model.add(Dense(9, init='uniform', activation='relu'))
-			self.model.add(Dense(4, init='uniform'))
-
-			self.model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_squared_error'])
+			model = Sequential()
+			model.add(Dense(16, input_dim=16, init='uniform', activation='relu'))
+			model.add(Dense(8, init='uniform', activation='relu'))
+			model.add(Dense(8, init='uniform', activation='relu'))
+			model.add(Dense(8, init='uniform', activation='relu'))
+			model.add(Dense(4, init='uniform'))
+			model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_squared_error'])
+		return model
 
 	def run_through_replay(self):
 		if (self.replays.filled or self.replays.iter >= 512):
@@ -97,7 +101,7 @@ class DQN(object):
 			
 			for replay_iter in xrange(replay_iters):
 				sim_state = s_new[replay_iter][:].reshape(16)
-				y[replay_iter] = self.model.predict(s[replay_iter].reshape([1,16]))
+				y[replay_iter] = self.target_model.predict(s[replay_iter].reshape([1,16]))
 				y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max(sim_state)
 
 			self.model.fit(s, y, nb_epoch=1, batch_size=bsize, verbose=0)
@@ -118,6 +122,9 @@ class DQN(object):
 	def Q_max(self, state):
 		Q_vals = self.model.predict(state.reshape([1, 16]))
 		return np.max(Q_vals)
+
+	def copy_to_target_model(self):
+		self.target_model.set_weights(self.model.get_weights())
 
 	def save_model(self):
 		model_json = self.model.to_json()
@@ -149,6 +156,9 @@ if __name__ == '__main__':
 
 		# Run through environment
 		while(1):
+
+			if (iters % copy_to_target_timeout == 0):
+				dqn.copy_to_target_model()
 
 			# Get reward and next state and max - action
 			game_state, reward = agent.take_step(init_act)

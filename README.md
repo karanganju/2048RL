@@ -6,8 +6,9 @@
   
 2. Code Readability
 
-3. Extensions :
-   * Target Network
+3. Play with Hyperparams
+
+4. Extensions :
    * Double DQN
    * Dueling Network
    * Prioritized Replay
