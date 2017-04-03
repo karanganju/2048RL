@@ -1,17 +1,20 @@
+# Team
+
 # Issues
 
-1. Takes a lot of time due to inconsequential actions (I prefer fix number 2 due to lack of resources and time)
-   * Can penalize such actions using same network (Network has to learn and is agnostic)
-   * Can bar such actions using hard-coded restrictions (Network knows which actions)
+1. Takes a lot of time due to inconsequential actions which lead to infinte loops (if not exploring properly). Example would be a predicted downward action when no cell can move any downwards.
+   * Explore more
+   * Increase batch size for gradient descent update to avoid very local minimas.
 
-2. Target Network takes a lot of time!!!
+2. The implementation with target Network is taking a lot of time!
   
-3. Code Readability
+3. Work to improve code readability
 
-4. Play with Hyperparams
+4. Play with Hyperparams:
+   * N: Total number of experiences in the replay buffer
+   * B: Number of experiences sampled from replay
 
-5. Extensions :
+5. Beyond this project - Additional Deep Q learning tweaks that may improve results. We encourage experimenting with following:
    * Double DQN
    * Dueling Network
    * Prioritized Replay
-   * Actor-Critic (A3C)?
