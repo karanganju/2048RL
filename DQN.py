@@ -49,10 +49,8 @@ class Replays(object):
 			else:
 				r = random.randrange(self.iter+1)
 
-			for j in xrange(16):
-				ret_s[i][j] = self.s[r][j]
-			for j in xrange(16):
-				ret_s_new[i][j] = self.s_new[r][j]
+			ret_s[i] = self.s[r]
+			ret_s_new[i] = self.s_new[r]
 			ret_r[i] = self.r[r]
 			ret_a[i] = self.a[r]
 
@@ -154,13 +152,14 @@ if __name__ == '__main__':
 		init_state = agent.get_array()
 		# Epsilon greedy here.
 		init_act = dqn.select_epsilon_greedy(init_state)
+		next_state = 0
 
 		runs += 1
 		# iters = 0
 
 		# Run through environment
 		while(1):
-
+			
 			if (iters % copy_to_target_timeout == 0):
 				dqn.copy_to_target_model()
 
@@ -170,7 +169,7 @@ if __name__ == '__main__':
 			iters += 1
 
 			next_state = agent.get_array()
-			
+
 			# Add data to mini-batch
 			replays.add_instance(init_state, init_act, reward, next_state) 
 
@@ -184,7 +183,7 @@ if __name__ == '__main__':
 				break
 
 			# Switch init_* with epsilon greedy
-			init_state = next_state
+			init_state = np.copy(next_state)
 			init_act = dqn.select_epsilon_greedy(init_state)
 			
 		if (runs % save_stops == 0):
