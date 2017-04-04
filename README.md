@@ -1,4 +1,5 @@
 # Team
+Garima Lalwani (glalwan2), Karan Ganju (kganju2) and Unnat Jain (uj2)    
 
 # Issues
 
