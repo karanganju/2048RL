@@ -64,11 +64,8 @@ class Replays(object):
 		if (self.iter == self.cap):
 			self.filled = True
 			self.iter = 0
-		for i in xrange(16):
-			self.s[self.iter][i] = init_state[i]
-		for i in xrange(16):
-			self.s_new[self.iter][i] = next_state[i]
-
+		self.s[self.iter] = init_state[0]
+		self.s_new[self.iter] = next_state[0]
 		self.r[self.iter] = reward
 		self.a[self.iter] = action
 
@@ -104,7 +101,7 @@ class DQN(object):
 			y = np.zeros([self.replays.sample_size, 4])
 			
 			for replay_iter in xrange(self.replays.sample_size):
-				sim_state = s_new[replay_iter][:].reshape(16)
+				sim_state = s_new[replay_iter].reshape([1,16])
 				y[replay_iter] = self.target_model.predict(s[replay_iter].reshape([1,16]))
 				y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max(sim_state)
 
@@ -120,15 +117,11 @@ class DQN(object):
 		return act_taken
 
 	def select_greedy(self, state):
-		Q_vals = self.model.predict(state.reshape([1, 16]))
-		# print Q_vals
-		# print "BC"
-		# temp_Q = self.model.predict_classes(state.reshape([1, 16]), verbose=0)
-		# print temp_Q
+		Q_vals = self.model.predict(state)
 		return np.argmax(Q_vals)
 
 	def Q_max(self, state):
-		Q_vals = self.model.predict(state.reshape([1, 16]))
+		Q_vals = self.model.predict(state)
 		return np.max(Q_vals)
 
 	def copy_to_target_model(self):
@@ -191,7 +184,7 @@ if __name__ == '__main__':
 				break
 
 			# Switch init_* with epsilon greedy
-			init_state = next_state[:16]
+			init_state = next_state
 			init_act = dqn.select_epsilon_greedy(init_state)
 			
 		if (runs % save_stops == 0):
