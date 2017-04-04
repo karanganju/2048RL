@@ -1,4 +1,3 @@
-import tensorflow as tf
 import numpy as np
 from env import Env,Agent
 from keras.models import Sequential
@@ -124,6 +123,7 @@ class DQN(object):
 		return np.max(Q_vals)
 
 	def copy_to_target_model(self):
+
 		self.target_model.set_weights(self.model.get_weights())
 
 	def save_model(self):
