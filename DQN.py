@@ -1,3 +1,5 @@
+# theano.config.device = 'gpu'
+# theano.config.floatX = 'float32'
 import numpy as np
 from env import Env,Agent
 from keras.models import Sequential
@@ -6,18 +8,21 @@ import random
 import time
 import sys, getopt
 
+
 # Hyperparams
 read_model = False
-discount = 0.9
+read_model_index = 1
+discount = 0.99
 max_epsilon = 1
 min_epsilon = 0.1
-replay_size = 2048
+replay_size = 2048*256
 replay_iters = 128
-bsize = 8
-save_stops = 50
+bsize = 128
+save_stops = 100
 runs = 0
-runs_to_min_epsilon = 100
+runs_to_min_epsilon = 2048
 copy_to_target_timeout = 1024
+replay_start_train = 4096*2
 
 class Replays(object):
 
@@ -77,12 +82,12 @@ class DQN(object):
 
 	def create_model(self):
 		if (read_model):
-			json_file = open('model.json', 'r')
+			json_file = open("models/model_"+ str(read_model_index) +".json", 'r')
 			loaded_model_json = json_file.read()
 			json_file.close()
 			model = model_from_json(loaded_model_json)
 			# load weights into new model
-			model.load_weights("model.h5")
+			model.load_weights("models/model_"+ str(read_model_index) +".h5")
 		else:
 			model = Sequential()
 			model.add(Dense(16, input_dim=16, init='uniform', activation='relu'))
@@ -94,11 +99,11 @@ class DQN(object):
 		return model
 
 	def run_through_replay(self):
-		if (self.replays.filled or self.replays.iter >= 512):
+		if (self.replays.filled or self.replays.iter >= replay_start_train):
 			s,a,r,s_new = replays.sample()
 			y = np.zeros([self.replays.sample_size, 4])
 			
-			for replay_iter in xrange(replay_iters):
+			for replay_iter in xrange(self.replays.sample_size):
 				sim_state = s_new[replay_iter][:].reshape(16)
 				y[replay_iter] = self.target_model.predict(s[replay_iter].reshape([1,16]))
 				y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max(sim_state)
@@ -116,6 +121,10 @@ class DQN(object):
 
 	def select_greedy(self, state):
 		Q_vals = self.model.predict(state.reshape([1, 16]))
+		# print Q_vals
+		# print "BC"
+		# temp_Q = self.model.predict_classes(state.reshape([1, 16]), verbose=0)
+		# print temp_Q
 		return np.argmax(Q_vals)
 
 	def Q_max(self, state):
@@ -126,21 +135,23 @@ class DQN(object):
 
 		self.target_model.set_weights(self.model.get_weights())
 
-	def save_model(self):
+	def save_model(self, index):
 		model_json = self.model.to_json()
-		with open("model.json", "w") as json_file:
+		with open("models/model_"+ str(index) +".json", "w") as json_file:
 		    json_file.write(model_json)
-		self.model.save_weights("model.h5")
+		self.model.save_weights("models/model_"+ str(index) +".h5")
 
 if __name__ == '__main__':
 
-	opts, args = getopt.getopt(sys.argv,"i",[])
+	opts, args = getopt.getopt(sys.argv,"i:",[])
 	for opt, arg in opts:
 		if opt == '-i':
 			read_model = True
 
 	replays = Replays(replay_size, replay_iters)
 	dqn = DQN(replays)
+	iters = 0
+	prev_iters  = 0
 
 	while(1):
 
@@ -152,7 +163,7 @@ if __name__ == '__main__':
 		init_act = dqn.select_epsilon_greedy(init_state)
 
 		runs += 1
-		iters = 0
+		# iters = 0
 
 		# Run through environment
 		while(1):
@@ -165,11 +176,6 @@ if __name__ == '__main__':
 			# time.sleep(3)
 			iters += 1
 
-			# Game over
-			if (game_state == -1 or game_state == 1):
-				print '{0:6d} {1:5d} {2:5d}'.format(game.score, game.max, iters)
-				break
-
 			next_state = agent.get_array()
 			
 			# Add data to mini-batch
@@ -177,10 +183,16 @@ if __name__ == '__main__':
 
 			# Run through replay
 			dqn.run_through_replay()
+			
+			# Game over
+			if (game_state == -1 or game_state == 1):
+				print '{0:6d} {1:5d} {2:5d}'.format(game.score, game.max, iters - prev_iters)
+				prev_iters = iters
+				break
 
 			# Switch init_* with epsilon greedy
 			init_state = next_state[:16]
 			init_act = dqn.select_epsilon_greedy(init_state)
 			
 		if (runs % save_stops == 0):
-			dqn.save_model()
+			dqn.save_model(runs/save_stops)

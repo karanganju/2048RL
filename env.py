@@ -202,12 +202,12 @@ class Agent(object):
 		return self.game_status,self.reward_formulation(prev_score)
 
 	def reward_formulation(self, prev_score):
-		if (self.game_status == 0):
-			return self.env.score - prev_score
-		elif (self.game_status == 1):
-			return 1000
+		reward = self.env.score - prev_score
+		if (self.game_status == 1):
+			reward += 1000
 		elif (self.game_status == -1):
-			return -1000
+			reward -= 1000
+		return reward
 
 	def get_array(self):
 		return self.env.array.reshape(16)
