@@ -95,7 +95,7 @@ class DQN(object):
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(4, init='uniform'))
-            model.compile(loss='mean_squared_error', optimizer="rmsprop")
+            model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr=self.learning_rate))
         return model
 
     def run_through_replay(self):
@@ -253,6 +253,9 @@ if __name__ == '__main__':
         if (runs % save_stops == 0):
             filename = 'sim_'+folder_num + '/model_{}'.format(runs/save_stops)
             dqn.save_model('models/{}'.format(filename))
+
+        if (runs % (save_stops*20) == 0):
+            filename = 'sim_'+folder_num + '/model_{}'.format(runs/save_stops)
             pickle_filename = 'replays/{}.pckl'.format(filename)
             print(os.path.dirname(pickle_filename))
             if not os.path.exists(os.path.dirname(pickle_filename)):
