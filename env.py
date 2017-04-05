@@ -210,7 +210,7 @@ class Agent(object):
 		return reward
 
 	def get_array(self):
-		return self.env.array.reshape(16)
+		return self.env.array.reshape([1,16])
 
 
 
