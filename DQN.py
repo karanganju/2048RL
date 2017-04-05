@@ -8,7 +8,6 @@ import random
 import time
 import sys, getopt
 
-
 # Hyperparams
 read_model = False
 read_model_index = 1
@@ -18,11 +17,14 @@ min_epsilon = 0.1
 replay_size = 2048*256
 replay_iters = 128
 bsize = 128
-save_stops = 100
+save_stops = 100 #runs
 runs = 0
-runs_to_min_epsilon = 2048
-copy_to_target_timeout = 1024
-replay_start_train = 4096*2
+runs_to_min_epsilon = 2048 #runs
+copy_to_target_timeout = 1024 #steps
+replay_start_train = 4096*2 #steps
+test_on_holdout = True
+holdout_size = 512
+validation_timeout_runs = 50 #runs
 
 class Replays(object):
 
@@ -56,7 +58,6 @@ class Replays(object):
 
 		return ret_s, ret_a, ret_r, ret_s_new
 
-	# Much param naming such wow!
 	def add_instance(self, init_state, action, reward, next_state):
 		self.iter = self.iter+1
 		if (self.iter == self.cap):
@@ -69,9 +70,10 @@ class Replays(object):
 
 class DQN(object):
 
-	def __init__(self, replay):
+	def __init__(self, replay, validation_set):
 		
 		self.replays = replay
+		self.validation_set = validation_set
 		self.model = self.create_model()
 		self.target_model = self.create_model()
 
@@ -132,15 +134,59 @@ class DQN(object):
 		    json_file.write(model_json)
 		self.model.save_weights("models/model_"+ str(index) +".h5")
 
+	def evaluate(self):
+		s = self.validation_set.s
+		a = self.validation_set.a
+		r = self.validation_set.r
+		s_new = self.validation_set.s_new
+		y = np.zeros([self.validation_set.cap, 4])
+
+		Q_ave = 0.0
+
+		for validation_iter in xrange(self.validation_set.cap):
+			sim_state = s_new[validation_iter].reshape([1,16])
+			y[validation_iter] = self.target_model.predict(s[validation_iter].reshape([1,16]))
+			Q_ave += y[validation_iter][a[validation_iter]]
+			y[validation_iter][a[validation_iter]] = r[validation_iter] + discount * self.Q_max(sim_state)
+
+		return self.model.evaluate(s, y, batch_size=self.validation_set.cap, verbose=0), Q_ave/self.validation_set.cap
+
+def fill_val_set(val_set):
+	for v_iter in xrange(holdout_size):
+		game = Env(False)
+		agent = Agent(game)
+		while(1):
+			init_state = agent.get_array()
+			init_act = random.randrange(4)
+			game_state, reward = agent.take_step(init_act)
+			next_state = agent.get_array()
+			if (random.random() < 0.01):
+				val_set.add_instance(init_state, init_act, reward, next_state)
+				break
+			if (game_state != 0):
+				v_iter -= 1
+				break
+
 if __name__ == '__main__':
 
-	opts, args = getopt.getopt(sys.argv,"i:",[])
+	opts, args = getopt.getopt(sys.argv[1:],"i:",[])
 	for opt, arg in opts:
 		if opt == '-i':
 			read_model = True
+			read_model_index = arg
 
 	replays = Replays(replay_size, replay_iters)
-	dqn = DQN(replays)
+
+	# validation_set isn't meant to be sampled from -> hence, replay_iters = 0
+	validation_set = Replays(holdout_size, 0)
+
+	# Fill validation set
+	# Needs to be chosen well - for now random
+	if (test_on_holdout):
+		fill_val_set(validation_set)
+	
+	dqn = DQN(replays, validation_set)
+
 	iters = 0
 	prev_iters  = 0
 
@@ -159,7 +205,6 @@ if __name__ == '__main__':
 
 		# Run through environment
 		while(1):
-			
 			if (iters % copy_to_target_timeout == 0):
 				dqn.copy_to_target_model()
 
@@ -175,7 +220,7 @@ if __name__ == '__main__':
 
 			# Run through replay
 			dqn.run_through_replay()
-			
+
 			# Game over
 			if (game_state == -1 or game_state == 1):
 				print '{0:6d} {1:5d} {2:5d}'.format(game.score, game.max, iters - prev_iters)
@@ -188,3 +233,6 @@ if __name__ == '__main__':
 			
 		if (runs % save_stops == 0):
 			dqn.save_model(runs/save_stops)
+
+		if (test_on_holdout and runs % validation_timeout_runs == 0):
+			print dqn.evaluate()
