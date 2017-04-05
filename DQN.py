@@ -4,6 +4,7 @@ import numpy as np
 from env import Env,Agent
 from keras.models import Sequential
 from keras.layers import Dense
+import keras
 import random
 import time
 import sys, getopt
@@ -18,7 +19,7 @@ min_epsilon = 0.1
 replay_size = 2048*256
 replay_iters = 128
 bsize = 128
-save_stops = 100 #runs
+save_stops = 10 #runs
 runs = 0
 runs_to_min_epsilon = 2048 #runs
 copy_to_target_timeout = 1024 #steps
@@ -71,10 +72,11 @@ class Replays(object):
 
 class DQN(object):
 
-    def __init__(self, replay, validation_set):
+    def __init__(self, replay, validation_set, grad_desc_lr=0.001):
         
         self.replays = replay
         self.validation_set = validation_set
+        self.learning_rate = grad_desc_lr
         self.model = self.create_model()
         self.target_model = self.create_model()
 
@@ -93,7 +95,7 @@ class DQN(object):
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(4, init='uniform'))
-            model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_squared_error'])
+            model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr = self.learning_rate), metrics=['mean_squared_error'])
         return model
 
     def run_through_replay(self):
@@ -103,8 +105,8 @@ class DQN(object):
             
             for replay_iter in xrange(self.replays.sample_size):
                 sim_state = s_new[replay_iter].reshape([1,16])
-                y[replay_iter] = self.target_model.predict(s[replay_iter].reshape([1,16]))
-                y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max(sim_state)
+                y[replay_iter] = self.model.predict(s[replay_iter].reshape([1,16]))
+                y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max_from_target(sim_state)
 
             self.model.fit(s, y, nb_epoch=1, batch_size=bsize, verbose=0)
 
@@ -121,8 +123,8 @@ class DQN(object):
         Q_vals = self.model.predict(state)
         return np.argmax(Q_vals)
 
-    def Q_max(self, state):
-        Q_vals = self.model.predict(state)
+    def Q_max_from_target(self, state):
+        Q_vals = self.target_model.predict(state)
         return np.max(Q_vals)
 
     def copy_to_target_model(self):
@@ -155,9 +157,9 @@ class DQN(object):
 
         for validation_iter in xrange(self.validation_set.cap):
             sim_state = s_new[validation_iter].reshape([1,16])
-            y[validation_iter] = self.target_model.predict(s[validation_iter].reshape([1,16]))
+            y[validation_iter] = self.model.predict(s[validation_iter].reshape([1,16]))
             Q_ave += y[validation_iter][a[validation_iter]]
-            y[validation_iter][a[validation_iter]] = r[validation_iter] + discount * self.Q_max(sim_state)
+            y[validation_iter][a[validation_iter]] = r[validation_iter] + discount*self.Q_max_from_target(sim_state)
 
         return self.model.evaluate(s, y, batch_size=self.validation_set.cap, verbose=0), Q_ave/self.validation_set.cap
 
@@ -178,12 +180,17 @@ def fill_val_set(val_set):
                 break
 
 if __name__ == '__main__':
-
-    opts, args = getopt.getopt(sys.argv[1:],"i:",[])
+    grad_desc_lr = 0.001
+    folder_num = 0
+    opts, args = getopt.getopt(sys.argv[1:],"i:l:s:",[])
     for opt, arg in opts:
         if opt == '-i':
             read_model = True
             read_model_index = arg
+        elif opt == '-l':
+            grad_desc_lr = arg
+        elif opt == '-s':
+            folder_num = arg
 
     replays = Replays(replay_size, replay_iters)
 
@@ -195,7 +202,7 @@ if __name__ == '__main__':
     if (test_on_holdout):
         fill_val_set(validation_set)
     
-    dqn = DQN(replays, validation_set)
+    dqn = DQN(replays, validation_set, grad_desc_lr)
 
     iters = 0
     prev_iters  = 0
@@ -242,7 +249,7 @@ if __name__ == '__main__':
             init_act = dqn.select_epsilon_greedy(init_state)
 
         if (runs % save_stops == 0):
-            filename = 'sim2/model_{}'.format(runs/save_stops)
+            filename = 'sim_'+folder_num + '/model_{}'.format(runs/save_stops)
             dqn.save_model('models/{}'.format(filename))
             pickle_filename = 'replays/{}.pckl'.format(filename)
             print(os.path.dirname(pickle_filename))
