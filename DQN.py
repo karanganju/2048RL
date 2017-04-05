@@ -95,7 +95,8 @@ class DQN(object):
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(4, init='uniform'))
-            model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr=self.learning_rate))
+            # model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr=self.learning_rate))
+            model.compile(loss='mean_squared_error', optimizer="rmsprop")
         return model
 
     def run_through_replay(self):
