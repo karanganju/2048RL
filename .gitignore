@@ -1,3 +1,4 @@
 env.pyc
-model*.*
+models/*
+replays/*
 out
