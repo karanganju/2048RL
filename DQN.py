@@ -19,7 +19,7 @@ min_epsilon = 0.1
 replay_size = 2048*256
 replay_iters = 128
 bsize = 128
-save_stops = 10 #runs
+save_stops = 100 #runs
 runs = 0
 runs_to_min_epsilon = 2048 #runs
 copy_to_target_timeout = 1024 #steps
@@ -95,7 +95,7 @@ class DQN(object):
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(8, init='uniform', activation='relu'))
             model.add(Dense(4, init='uniform'))
-            model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr = self.learning_rate), metrics=['mean_squared_error'])
+            model.compile(loss='mean_squared_error', optimizer="rmsprop")
         return model
 
     def run_through_replay(self):
@@ -108,7 +108,9 @@ class DQN(object):
                 y[replay_iter] = self.model.predict(s[replay_iter].reshape([1,16]))
                 y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max_from_target(sim_state)
 
-            self.model.fit(s, y, nb_epoch=1, batch_size=bsize, verbose=0)
+            self.model.fit(s, y, nb_epoch=10, batch_size=bsize, verbose=0)
+            # print self.model.get_weights()[0][0]
+            # print "END"
 
     def select_epsilon_greedy(self, state):
         act_taken = self.select_greedy(state)
@@ -160,7 +162,7 @@ class DQN(object):
             y[validation_iter] = self.model.predict(s[validation_iter].reshape([1,16]))
             Q_ave += y[validation_iter][a[validation_iter]]
             y[validation_iter][a[validation_iter]] = r[validation_iter] + discount*self.Q_max_from_target(sim_state)
-
+        
         return self.model.evaluate(s, y, batch_size=self.validation_set.cap, verbose=0), Q_ave/self.validation_set.cap
 
 def fill_val_set(val_set):
