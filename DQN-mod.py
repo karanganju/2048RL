@@ -1,7 +1,7 @@
 # theano.config.device = 'gpu'
 # theano.config.floatX = 'float32'
 import numpy as np
-from env import Env,Agent
+from env2 import Env,Agent
 from keras.models import Sequential
 from keras.layers import Dense
 import keras
@@ -17,17 +17,17 @@ discount = 0.99
 max_epsilon = 1
 min_epsilon = 0.1
 replay_size = 2048*256
-replay_iters = 128
-bsize = 128
+replay_iters = 512
+bsize = 512
 save_stops = 100 #runs
 runs = 0
 runs_to_min_epsilon = 2048 #runs
-copy_to_target_timeout = 1024 #steps
+copy_to_target_timeout = 2048 #steps
 replay_start_train = 4096*2 #steps
 test_on_holdout = True
 holdout_size = 512
 validation_timeout_runs = 50 #runs
-board_size = 4
+board_size = 3
 input_size = board_size * board_size
 
 class Replays(object):
@@ -170,7 +170,7 @@ class DQN(object):
 
 def fill_val_set(val_set):
     for v_iter in xrange(holdout_size):
-        game = Env(False)
+        game = Env(False, board_size)
         agent = Agent(game)
         while(1):
             init_state = agent.get_array()
@@ -214,7 +214,7 @@ if __name__ == '__main__':
 
     while(1):
 
-        game = Env(False)
+        game = Env(False, board_size)
         agent = Agent(game)
 
         init_state = agent.get_array()
@@ -237,8 +237,9 @@ if __name__ == '__main__':
 
             next_state = agent.get_array()
 
-            # Add data to mini-batch
-            replays.add_instance(init_state, init_act, reward, next_state) 
+            # Add data to mini-batch only if next state is different
+            if (next_state != init_state).any():
+                replays.add_instance(init_state, init_act, reward, next_state) 
 
             # Run through replay
             dqn.run_through_replay()
@@ -254,22 +255,22 @@ if __name__ == '__main__':
             init_act = dqn.select_epsilon_greedy(init_state)
 
         if (runs % save_stops == 0):
-            filename = 'sim_'+folder_num + '/model_{}'.format(runs/save_stops)
+            filename = 'sim_' + str(folder_num) + '/model_{}'.format(runs/save_stops)
             dqn.save_model('models/{}'.format(filename))
 
-        if (runs % (save_stops*20) == 0):
-            filename = 'sim_'+folder_num + '/model_{}'.format(runs/save_stops)
-            pickle_filename = 'replays/{}.pckl'.format(filename)
-            print(os.path.dirname(pickle_filename))
-            if not os.path.exists(os.path.dirname(pickle_filename)):
-                try:
-                    os.makedirs(os.path.dirname(pickle_filename))
-                except OSError as exc: # Guard against race condition
-                    if exc.errno != errno.EEXIST:
-                        raise
-            f = open(pickle_filename, 'wb')
-            pickle.dump(dqn.replays, f)
-            f.close()
+        # if (runs % (save_stops*20) == 0):
+        #     filename = 'sim_'+folder_num + '/model_{}'.format(runs/save_stops)
+        #     pickle_filename = 'replays/{}.pckl'.format(filename)
+        #     print(os.path.dirname(pickle_filename))
+        #     if not os.path.exists(os.path.dirname(pickle_filename)):
+        #         try:
+        #             os.makedirs(os.path.dirname(pickle_filename))
+        #         except OSError as exc: # Guard against race condition
+        #             if exc.errno != errno.EEXIST:
+        #                 raise
+        #     f = open(pickle_filename, 'wb')
+        #     pickle.dump(dqn.replays, f)
+        #     f.close()
 
         if (test_on_holdout and runs % validation_timeout_runs == 0):
             print dqn.evaluate()
