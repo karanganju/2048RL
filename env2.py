@@ -157,9 +157,9 @@ class Env(object):
 				self.unfilled+=1;
 				ret_val = -1;
 				self.has_merged[i2*self.len+j2] = 1
-				self.max = max(self.max, self.array[i2][j2])
 			self.array[i2][j2] = self.array[i][j] + self.array[i2][j2];
 			self.array[i][j] = 0;
+			self.max = max(self.max, self.array[i2][j2])
 			if (self.array[i2][j2] == 2048):
 				self.game_won = True
 			self.valid_move = True;
@@ -229,8 +229,21 @@ class Agent(object):
 			return -1
 
 	def get_array(self):
-		return np.array(self.env.array).reshape([1,self.env.size])
+		if (self.handcrafted):
+			extra_features = np.zeros([4])
+			extra_features[0] = self.env.unfilled
+			extra_features[1] = self.env.max
+			extra_features[2] = np.unique(self.env.array).size
 
+			for x in xrange(self.env.len):
+				for y in xrange(self.env.len-1):
+					if (self.env.array[x][y] == self.env.array[x][y+1] and self.env.array[x][y] != 0):
+						extra_features[3] += 1
+					if (self.env.array[y][x] == self.env.array[y+1][x] and self.env.array[y][x] != 0):
+						extra_features[3] += 1
+			return np.append(np.array(self.env.array), extra_features).reshape([1,self.env.size + 4])
+		else :
+			return np.array(self.env.array).reshape([1,self.env.size])
 
 if __name__ == '__main__':
 

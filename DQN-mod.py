@@ -19,7 +19,7 @@ min_epsilon = 0.1
 replay_size = 2048*256
 replay_iters = 512
 bsize = 512
-save_stops = 100 #runs
+save_stops = 150 #runs
 runs = 0
 runs_to_min_epsilon = 2048 #runs
 copy_to_target_timeout = 2048 #steps
@@ -28,7 +28,9 @@ test_on_holdout = True
 holdout_size = 512
 validation_timeout_runs = 50 #runs
 board_size = 3
-input_size = board_size * board_size
+capped_rewards = True
+handcrafted_features = False
+input_size = board_size * board_size #+ 4
 
 class Replays(object):
 
@@ -93,9 +95,9 @@ class DQN(object):
         else:
             model = Sequential()
             model.add(Dense(input_size, input_dim=input_size, init='uniform', activation='relu'))
-            model.add(Dense(8, init='uniform', activation='relu'))
-            model.add(Dense(8, init='uniform', activation='relu'))
-            model.add(Dense(8, init='uniform', activation='relu'))
+            model.add(Dense(input_size/2 + 2, init='uniform', activation='relu'))
+            model.add(Dense(input_size/2 + 2, init='uniform', activation='relu'))
+            model.add(Dense(input_size/2 + 2, init='uniform', activation='relu'))
             model.add(Dense(4, init='uniform'))
             # model.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr=self.learning_rate))
             model.compile(loss='mean_squared_error', optimizer="rmsprop")
@@ -171,7 +173,7 @@ class DQN(object):
 def fill_val_set(val_set):
     for v_iter in xrange(holdout_size):
         game = Env(False, board_size)
-        agent = Agent(game)
+        agent = Agent(game,capped_rewards,handcrafted_features)
         while(1):
             init_state = agent.get_array()
             init_act = random.randrange(4)
@@ -186,7 +188,7 @@ def fill_val_set(val_set):
 
 if __name__ == '__main__':
     grad_desc_lr = 0.001
-    folder_num = 0
+    folder_num = "default"
     opts, args = getopt.getopt(sys.argv[1:],"i:l:s:",[])
     for opt, arg in opts:
         if opt == '-i':
@@ -215,7 +217,7 @@ if __name__ == '__main__':
     while(1):
 
         game = Env(False, board_size)
-        agent = Agent(game)
+        agent = Agent(game,capped_rewards,handcrafted_features)
 
         init_state = agent.get_array()
         # Epsilon greedy here.
@@ -273,4 +275,5 @@ if __name__ == '__main__':
         #     f.close()
 
         if (test_on_holdout and runs % validation_timeout_runs == 0):
-            print dqn.evaluate()
+            loss, Q_val = dqn.evaluate()
+            print "Metrics:", loss, ",",  Q_val[0]
