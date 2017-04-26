@@ -47,49 +47,48 @@ def simulation(idx):
   if idx > 0:
     sys.stdout = Dummy()
 
-  gm = GameManager()
+  while(True):
+    gm = GameManager()
 
-  step = 0
-  total_time = 0
-  stale_steps = 0
-  grid = None
-  last_grid = None
-  times = []
-  while not gm.isOver():
-    step += 1
-    last_grid = grid
-    grid = gm.getGrid()
-    if grid == last_grid:
-      stale_steps += 1
-    else:
-      stale_steps = 0
-    if stale_steps >= 10:
-      sys.stderr.write('stale idx=%d\n' % idx)
-      assert 0
-      timeout_count.value = -99999
-    t0 = time.time()
-    nextKey = gm.ai.getNextMove(grid)
-    t1 = time.time()
-    total_time += t1 - t0
-    times.append(t1 - t0)
-    times.sort(reverse=True)
-    times = times[:20]
-    # if t1 - t0 > 0.1:
-    #   timeout_count.value += 1
-    #   sys.stderr.write('t %f, count=%d\n' % (t1 - t0, timeout_count.value))
-    gm.board.show()
-    print '%r : %d' % (gm.getGrid(), K_CODE2[nextKey])
-    print nextKey
-    gm.pressKey(KEY_CODE[nextKey])
-    # gm.board.show()
-    for m in KEY_CODE.keys():
-      if gm.board.canMove(gm.getGrid(), m):
+    step = 0
+    total_time = 0
+    stale_steps = 0
+    grid = None
+    last_grid = None
+    times = []
+    while not gm.isOver():
+      step += 1
+      last_grid = grid
+      grid = gm.getGrid()
+      if grid == last_grid:
+        stale_steps += 1
+      else:
+        stale_steps = 0
+      if stale_steps >= 10:
+        sys.stderr.write('stale idx=%d\n' % idx)
+        assert 0
+        timeout_count.value = -99999
+      t0 = time.time()
+      nextKey = gm.ai.getNextMove(grid)
+      t1 = time.time()
+      total_time += t1 - t0
+      times.append(t1 - t0)
+      times.sort(reverse=True)
+      times = times[:20]
+      # if t1 - t0 > 0.1:
+      #   timeout_count.value += 1
+      #   sys.stderr.write('t %f, count=%d\n' % (t1 - t0, timeout_count.value))
+      print '%r : %d' % (gm.getGrid(), K_CODE2[nextKey])
+      gm.pressKey(KEY_CODE[nextKey])
+      # gm.board.show()
+      for m in KEY_CODE.keys():
+        if gm.board.canMove(gm.getGrid(), m):
+          break
+      else:
         break
-    else:
-      break
-    #time.sleep(0.03)
-    if gm.isWin():
-      sys.exit()
+      #time.sleep(0.03)
+      if gm.isWin():
+        break
 
   remain.value -= 1
   times = [int(t*1000) for t in times]
