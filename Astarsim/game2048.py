@@ -199,6 +199,17 @@ class GameManager(object):
       grid.append(col)
     return grid
 
+  def getGridFormatted(self):
+    gs = self.getGameState()
+    if gs is None:
+      return None
+    raw_grid = gs['grid']['cells']
+    grid = list()
+    for i in xrange(4):
+      col = [x['value'] if x else 1 for x in raw_grid[i]]
+      grid.append(col)
+    return grid
+
   def getScore(self):
     return self.board.score
 
