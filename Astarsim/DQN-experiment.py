@@ -25,12 +25,10 @@ if __name__ == '__main__':
     while(1):
         states, labels = simulation(0)
 
-        for i in xrange(2):
+        for i in xrange(1):
             x, y = simulation(0)
             states = np.append(states, x, axis = 0)
             labels = np.append(labels, y)
-
-        print np.shape(states), np.shape(labels)
 
         permutation = np.random.permutation(states.shape[0])
 

@@ -1,0 +1,749 @@
+(2915, 4, 4, 12) (2915,)
+Train on 2769 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.3837 - acc: 0.3059 - val_loss: 1.3791 - val_acc: 0.2671
+Epoch 2/2
+0s - loss: 1.3582 - acc: 0.3749 - val_loss: 1.3324 - val_acc: 0.3630
+(2899, 4, 4, 12) (2899,)
+Train on 2754 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.3648 - acc: 0.2818 - val_loss: 1.3645 - val_acc: 0.2828
+Epoch 2/2
+0s - loss: 1.3430 - acc: 0.2952 - val_loss: 1.3497 - val_acc: 0.2966
+(2896, 4, 4, 12) (2896,)
+Train on 2751 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.3375 - acc: 0.3635 - val_loss: 1.3188 - val_acc: 0.3862
+Epoch 2/2
+0s - loss: 1.3092 - acc: 0.3868 - val_loss: 1.2959 - val_acc: 0.4069
+(2940, 4, 4, 12) (2940,)
+Train on 2793 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.3088 - acc: 0.3119 - val_loss: 1.2786 - val_acc: 0.3333
+Epoch 2/2
+0s - loss: 1.2723 - acc: 0.3487 - val_loss: 1.2640 - val_acc: 0.3741
+(2916, 4, 4, 12) (2916,)
+Train on 2770 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.2983 - acc: 0.3527 - val_loss: 1.2889 - val_acc: 0.3973
+Epoch 2/2
+0s - loss: 1.2903 - acc: 0.3744 - val_loss: 1.2901 - val_acc: 0.3904
+(2883, 4, 4, 12) (2883,)
+Train on 2738 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.3040 - acc: 0.3824 - val_loss: 1.2586 - val_acc: 0.4414
+Epoch 2/2
+0s - loss: 1.2577 - acc: 0.3915 - val_loss: 1.2094 - val_acc: 0.4345
+(2869, 4, 4, 12) (2869,)
+Train on 2725 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.3428 - acc: 0.3215 - val_loss: 1.3886 - val_acc: 0.2014
+Epoch 2/2
+0s - loss: 1.3194 - acc: 0.3450 - val_loss: 1.3628 - val_acc: 0.3125
+(2910, 4, 4, 12) (2910,)
+Train on 2764 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.3049 - acc: 0.3535 - val_loss: 1.3191 - val_acc: 0.3288
+Epoch 2/2
+0s - loss: 1.2879 - acc: 0.3632 - val_loss: 1.3005 - val_acc: 0.3356
+(2905, 4, 4, 12) (2905,)
+Train on 2759 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.3210 - acc: 0.3632 - val_loss: 1.3356 - val_acc: 0.3904
+Epoch 2/2
+0s - loss: 1.2788 - acc: 0.4016 - val_loss: 1.3069 - val_acc: 0.3904
+(2937, 4, 4, 12) (2937,)
+Train on 2790 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.2321 - acc: 0.3921 - val_loss: 1.2342 - val_acc: 0.4150
+Epoch 2/2
+0s - loss: 1.2059 - acc: 0.3878 - val_loss: 1.2234 - val_acc: 0.3810
+(2989, 4, 4, 12) (2989,)
+Train on 2839 samples, validate on 150 samples
+Epoch 1/2
+0s - loss: 1.3204 - acc: 0.3343 - val_loss: 1.2827 - val_acc: 0.3933
+Epoch 2/2
+0s - loss: 1.2846 - acc: 0.3596 - val_loss: 1.2583 - val_acc: 0.3533
+(2888, 4, 4, 12) (2888,)
+Train on 2743 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.2577 - acc: 0.3977 - val_loss: 1.2411 - val_acc: 0.4207
+Epoch 2/2
+0s - loss: 1.2366 - acc: 0.3988 - val_loss: 1.2343 - val_acc: 0.3793
+(2948, 4, 4, 12) (2948,)
+Train on 2800 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.2872 - acc: 0.3857 - val_loss: 1.2526 - val_acc: 0.3784
+Epoch 2/2
+0s - loss: 1.2693 - acc: 0.4114 - val_loss: 1.2343 - val_acc: 0.3986
+(3042, 4, 4, 12) (3042,)
+Train on 2889 samples, validate on 153 samples
+Epoch 1/2
+0s - loss: 1.2226 - acc: 0.3908 - val_loss: 1.1961 - val_acc: 0.4444
+Epoch 2/2
+0s - loss: 1.2024 - acc: 0.3904 - val_loss: 1.1865 - val_acc: 0.4379
+(2901, 4, 4, 12) (2901,)
+Train on 2755 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.2989 - acc: 0.3760 - val_loss: 1.3130 - val_acc: 0.3219
+Epoch 2/2
+0s - loss: 1.2800 - acc: 0.3782 - val_loss: 1.3135 - val_acc: 0.3356
+(2928, 4, 4, 12) (2928,)
+Train on 2781 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.2839 - acc: 0.3883 - val_loss: 1.2176 - val_acc: 0.4490
+Epoch 2/2
+0s - loss: 1.2564 - acc: 0.3988 - val_loss: 1.1950 - val_acc: 0.4490
+(2925, 4, 4, 12) (2925,)
+Train on 2778 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.2233 - acc: 0.3974 - val_loss: 1.2633 - val_acc: 0.4082
+Epoch 2/2
+0s - loss: 1.2099 - acc: 0.4032 - val_loss: 1.2558 - val_acc: 0.3878
+(2962, 4, 4, 12) (2962,)
+Train on 2813 samples, validate on 149 samples
+Epoch 1/2
+0s - loss: 1.2255 - acc: 0.4070 - val_loss: 1.2227 - val_acc: 0.3758
+Epoch 2/2
+0s - loss: 1.2113 - acc: 0.4117 - val_loss: 1.2102 - val_acc: 0.3893
+(2905, 4, 4, 12) (2905,)
+Train on 2759 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.2156 - acc: 0.3994 - val_loss: 1.2292 - val_acc: 0.3973
+Epoch 2/2
+0s - loss: 1.2058 - acc: 0.4027 - val_loss: 1.2263 - val_acc: 0.3904
+(2945, 4, 4, 12) (2945,)
+Train on 2797 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.2197 - acc: 0.4022 - val_loss: 1.2107 - val_acc: 0.4392
+Epoch 2/2
+0s - loss: 1.1995 - acc: 0.4087 - val_loss: 1.2057 - val_acc: 0.4392
+(2926, 4, 4, 12) (2926,)
+Train on 2779 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1932 - acc: 0.3786 - val_loss: 1.1727 - val_acc: 0.3946
+Epoch 2/2
+0s - loss: 1.1802 - acc: 0.3825 - val_loss: 1.1680 - val_acc: 0.4150
+(2906, 4, 4, 12) (2906,)
+Train on 2760 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1994 - acc: 0.3797 - val_loss: 1.1974 - val_acc: 0.3973
+Epoch 2/2
+0s - loss: 1.1892 - acc: 0.3949 - val_loss: 1.2061 - val_acc: 0.3767
+(2880, 4, 4, 12) (2880,)
+Train on 2736 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.2377 - acc: 0.3520 - val_loss: 1.2611 - val_acc: 0.3125
+Epoch 2/2
+0s - loss: 1.2221 - acc: 0.3596 - val_loss: 1.2496 - val_acc: 0.3125
+(2882, 4, 4, 12) (2882,)
+Train on 2737 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1944 - acc: 0.3891 - val_loss: 1.2798 - val_acc: 0.3034
+Epoch 2/2
+0s - loss: 1.1845 - acc: 0.3939 - val_loss: 1.2871 - val_acc: 0.3034
+(2807, 4, 4, 12) (2807,)
+Train on 2666 samples, validate on 141 samples
+Epoch 1/2
+0s - loss: 1.2206 - acc: 0.3638 - val_loss: 1.1430 - val_acc: 0.3688
+Epoch 2/2
+0s - loss: 1.2061 - acc: 0.3860 - val_loss: 1.1448 - val_acc: 0.3901
+(2877, 4, 4, 12) (2877,)
+Train on 2733 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.1975 - acc: 0.3765 - val_loss: 1.2186 - val_acc: 0.2708
+Epoch 2/2
+0s - loss: 1.1905 - acc: 0.3849 - val_loss: 1.2137 - val_acc: 0.2708
+(2903, 4, 4, 12) (2903,)
+Train on 2757 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1849 - acc: 0.4052 - val_loss: 1.1053 - val_acc: 0.4041
+Epoch 2/2
+0s - loss: 1.1761 - acc: 0.4149 - val_loss: 1.1040 - val_acc: 0.4315
+(2895, 4, 4, 12) (2895,)
+Train on 2750 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1664 - acc: 0.3996 - val_loss: 1.1805 - val_acc: 0.2966
+Epoch 2/2
+0s - loss: 1.1557 - acc: 0.4084 - val_loss: 1.1922 - val_acc: 0.3034
+(2930, 4, 4, 12) (2930,)
+Train on 2783 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1741 - acc: 0.3708 - val_loss: 1.1805 - val_acc: 0.3673
+Epoch 2/2
+0s - loss: 1.1599 - acc: 0.3784 - val_loss: 1.1846 - val_acc: 0.3469
+(2922, 4, 4, 12) (2922,)
+Train on 2775 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1898 - acc: 0.3932 - val_loss: 1.1829 - val_acc: 0.3878
+Epoch 2/2
+0s - loss: 1.1827 - acc: 0.3946 - val_loss: 1.1824 - val_acc: 0.3673
+(2909, 4, 4, 12) (2909,)
+Train on 2763 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1741 - acc: 0.3865 - val_loss: 1.2239 - val_acc: 0.3356
+Epoch 2/2
+0s - loss: 1.1646 - acc: 0.3891 - val_loss: 1.2272 - val_acc: 0.3562
+(2918, 4, 4, 12) (2918,)
+Train on 2772 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1755 - acc: 0.4116 - val_loss: 1.1769 - val_acc: 0.4384
+Epoch 2/2
+0s - loss: 1.1654 - acc: 0.4091 - val_loss: 1.1725 - val_acc: 0.4384
+(2897, 4, 4, 12) (2897,)
+Train on 2752 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1724 - acc: 0.3765 - val_loss: 1.1296 - val_acc: 0.3931
+Epoch 2/2
+0s - loss: 1.1618 - acc: 0.3743 - val_loss: 1.1288 - val_acc: 0.3862
+(2932, 4, 4, 12) (2932,)
+Train on 2785 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1794 - acc: 0.3838 - val_loss: 1.1453 - val_acc: 0.4490
+Epoch 2/2
+0s - loss: 1.1700 - acc: 0.3917 - val_loss: 1.1426 - val_acc: 0.4558
+(2892, 4, 4, 12) (2892,)
+Train on 2747 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1798 - acc: 0.3768 - val_loss: 1.2355 - val_acc: 0.3655
+Epoch 2/2
+0s - loss: 1.1708 - acc: 0.3830 - val_loss: 1.2440 - val_acc: 0.3517
+(2894, 4, 4, 12) (2894,)
+Train on 2749 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1761 - acc: 0.4009 - val_loss: 1.1513 - val_acc: 0.3793
+Epoch 2/2
+0s - loss: 1.1645 - acc: 0.4067 - val_loss: 1.1404 - val_acc: 0.3517
+(2938, 4, 4, 12) (2938,)
+Train on 2791 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1726 - acc: 0.3762 - val_loss: 1.2023 - val_acc: 0.3129
+Epoch 2/2
+0s - loss: 1.1606 - acc: 0.3733 - val_loss: 1.2048 - val_acc: 0.3129
+(2875, 4, 4, 12) (2875,)
+Train on 2731 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.1607 - acc: 0.3812 - val_loss: 1.1771 - val_acc: 0.3611
+Epoch 2/2
+0s - loss: 1.1494 - acc: 0.3874 - val_loss: 1.1562 - val_acc: 0.3750
+(2883, 4, 4, 12) (2883,)
+Train on 2738 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1586 - acc: 0.3944 - val_loss: 1.2236 - val_acc: 0.4000
+Epoch 2/2
+0s - loss: 1.1492 - acc: 0.3908 - val_loss: 1.2236 - val_acc: 0.4069
+(2940, 4, 4, 12) (2940,)
+Train on 2793 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1442 - acc: 0.3881 - val_loss: 1.0754 - val_acc: 0.4830
+Epoch 2/2
+0s - loss: 1.1372 - acc: 0.3874 - val_loss: 1.0924 - val_acc: 0.4286
+(2941, 4, 4, 12) (2941,)
+Train on 2793 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1738 - acc: 0.3863 - val_loss: 1.2012 - val_acc: 0.3243
+Epoch 2/2
+0s - loss: 1.1632 - acc: 0.3820 - val_loss: 1.2048 - val_acc: 0.3041
+(2900, 4, 4, 12) (2900,)
+Train on 2755 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1709 - acc: 0.3920 - val_loss: 1.1547 - val_acc: 0.4207
+Epoch 2/2
+0s - loss: 1.1613 - acc: 0.3960 - val_loss: 1.1591 - val_acc: 0.4069
+(2920, 4, 4, 12) (2920,)
+Train on 2774 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1656 - acc: 0.3832 - val_loss: 1.1660 - val_acc: 0.4178
+Epoch 2/2
+0s - loss: 1.1506 - acc: 0.3832 - val_loss: 1.1676 - val_acc: 0.4315
+(2957, 4, 4, 12) (2957,)
+Train on 2809 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1583 - acc: 0.4240 - val_loss: 1.1961 - val_acc: 0.4797
+Epoch 2/2
+0s - loss: 1.1466 - acc: 0.4336 - val_loss: 1.1883 - val_acc: 0.3919
+(2929, 4, 4, 12) (2929,)
+Train on 2782 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1630 - acc: 0.3954 - val_loss: 1.1394 - val_acc: 0.3946
+Epoch 2/2
+0s - loss: 1.1527 - acc: 0.3950 - val_loss: 1.1505 - val_acc: 0.3401
+(2896, 4, 4, 12) (2896,)
+Train on 2751 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1603 - acc: 0.3911 - val_loss: 1.1421 - val_acc: 0.4069
+Epoch 2/2
+0s - loss: 1.1520 - acc: 0.3944 - val_loss: 1.1440 - val_acc: 0.4069
+(2908, 4, 4, 12) (2908,)
+Train on 2762 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1479 - acc: 0.4214 - val_loss: 1.1220 - val_acc: 0.4315
+Epoch 2/2
+0s - loss: 1.1400 - acc: 0.4222 - val_loss: 1.1171 - val_acc: 0.4247
+(2877, 4, 4, 12) (2877,)
+Train on 2733 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.1414 - acc: 0.3882 - val_loss: 1.2194 - val_acc: 0.3889
+Epoch 2/2
+0s - loss: 1.1289 - acc: 0.3952 - val_loss: 1.2172 - val_acc: 0.4028
+(2921, 4, 4, 12) (2921,)
+Train on 2774 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1356 - acc: 0.3969 - val_loss: 1.1167 - val_acc: 0.3810
+Epoch 2/2
+0s - loss: 1.1248 - acc: 0.4110 - val_loss: 1.1093 - val_acc: 0.3673
+(2870, 4, 4, 12) (2870,)
+Train on 2726 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.1663 - acc: 0.3907 - val_loss: 1.1635 - val_acc: 0.4792
+Epoch 2/2
+0s - loss: 1.1571 - acc: 0.3936 - val_loss: 1.1717 - val_acc: 0.3681
+(2921, 4, 4, 12) (2921,)
+Train on 2774 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1449 - acc: 0.4077 - val_loss: 1.1116 - val_acc: 0.4286
+Epoch 2/2
+0s - loss: 1.1361 - acc: 0.4095 - val_loss: 1.1117 - val_acc: 0.4218
+(2890, 4, 4, 12) (2890,)
+Train on 2745 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1599 - acc: 0.3774 - val_loss: 1.0637 - val_acc: 0.4690
+Epoch 2/2
+0s - loss: 1.1484 - acc: 0.3843 - val_loss: 1.0604 - val_acc: 0.4483
+(2912, 4, 4, 12) (2912,)
+Train on 2766 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1490 - acc: 0.4049 - val_loss: 1.0848 - val_acc: 0.4247
+Epoch 2/2
+0s - loss: 1.1388 - acc: 0.4038 - val_loss: 1.0811 - val_acc: 0.4247
+(2886, 4, 4, 12) (2886,)
+Train on 2741 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1502 - acc: 0.3988 - val_loss: 1.1487 - val_acc: 0.3724
+Epoch 2/2
+0s - loss: 1.1401 - acc: 0.4086 - val_loss: 1.1477 - val_acc: 0.3862
+(2852, 4, 4, 12) (2852,)
+Train on 2709 samples, validate on 143 samples
+Epoch 1/2
+0s - loss: 1.1601 - acc: 0.4061 - val_loss: 1.1261 - val_acc: 0.4336
+Epoch 2/2
+0s - loss: 1.1525 - acc: 0.4205 - val_loss: 1.1273 - val_acc: 0.4406
+(2887, 4, 4, 12) (2887,)
+Train on 2742 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1305 - acc: 0.4001 - val_loss: 1.1766 - val_acc: 0.3586
+Epoch 2/2
+0s - loss: 1.1232 - acc: 0.4077 - val_loss: 1.1792 - val_acc: 0.3379
+(2901, 4, 4, 12) (2901,)
+Train on 2755 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1550 - acc: 0.3808 - val_loss: 1.1486 - val_acc: 0.4178
+Epoch 2/2
+0s - loss: 1.1418 - acc: 0.4163 - val_loss: 1.1437 - val_acc: 0.3973
+(2895, 4, 4, 12) (2895,)
+Train on 2750 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1308 - acc: 0.4091 - val_loss: 1.1014 - val_acc: 0.4207
+Epoch 2/2
+0s - loss: 1.1182 - acc: 0.4185 - val_loss: 1.0937 - val_acc: 0.4069
+(2890, 4, 4, 12) (2890,)
+Train on 2745 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1529 - acc: 0.4018 - val_loss: 1.1217 - val_acc: 0.4069
+Epoch 2/2
+0s - loss: 1.1449 - acc: 0.4095 - val_loss: 1.1123 - val_acc: 0.4828
+(2899, 4, 4, 12) (2899,)
+Train on 2754 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1221 - acc: 0.3896 - val_loss: 1.1240 - val_acc: 0.4138
+Epoch 2/2
+0s - loss: 1.1137 - acc: 0.4092 - val_loss: 1.1142 - val_acc: 0.4276
+(3015, 4, 4, 12) (3015,)
+Train on 2864 samples, validate on 151 samples
+Epoch 1/2
+0s - loss: 1.1494 - acc: 0.3897 - val_loss: 1.1865 - val_acc: 0.3974
+Epoch 2/2
+0s - loss: 1.1399 - acc: 0.4075 - val_loss: 1.1779 - val_acc: 0.3974
+(2896, 4, 4, 12) (2896,)
+Train on 2751 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1525 - acc: 0.4075 - val_loss: 1.1329 - val_acc: 0.4345
+Epoch 2/2
+0s - loss: 1.1400 - acc: 0.4158 - val_loss: 1.1323 - val_acc: 0.4207
+(2901, 4, 4, 12) (2901,)
+Train on 2755 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1301 - acc: 0.4094 - val_loss: 1.0897 - val_acc: 0.4178
+Epoch 2/2
+0s - loss: 1.1200 - acc: 0.4065 - val_loss: 1.0927 - val_acc: 0.4247
+(2918, 4, 4, 12) (2918,)
+Train on 2772 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1323 - acc: 0.4001 - val_loss: 1.1911 - val_acc: 0.3767
+Epoch 2/2
+0s - loss: 1.1218 - acc: 0.4113 - val_loss: 1.1906 - val_acc: 0.3356
+(2919, 4, 4, 12) (2919,)
+Train on 2773 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1484 - acc: 0.3949 - val_loss: 1.1949 - val_acc: 0.3973
+Epoch 2/2
+0s - loss: 1.1393 - acc: 0.4118 - val_loss: 1.1843 - val_acc: 0.3904
+(2879, 4, 4, 12) (2879,)
+Train on 2735 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.1266 - acc: 0.4077 - val_loss: 1.1615 - val_acc: 0.4097
+Epoch 2/2
+0s - loss: 1.1155 - acc: 0.4176 - val_loss: 1.1647 - val_acc: 0.3889
+(2882, 4, 4, 12) (2882,)
+Train on 2737 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1451 - acc: 0.3964 - val_loss: 1.1377 - val_acc: 0.4897
+Epoch 2/2
+0s - loss: 1.1346 - acc: 0.3946 - val_loss: 1.1333 - val_acc: 0.4069
+(2899, 4, 4, 12) (2899,)
+Train on 2754 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1409 - acc: 0.4183 - val_loss: 1.0747 - val_acc: 0.3724
+Epoch 2/2
+0s - loss: 1.1290 - acc: 0.4237 - val_loss: 1.0692 - val_acc: 0.3586
+(2925, 4, 4, 12) (2925,)
+Train on 2778 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1349 - acc: 0.4010 - val_loss: 1.1257 - val_acc: 0.4218
+Epoch 2/2
+0s - loss: 1.1250 - acc: 0.4042 - val_loss: 1.1296 - val_acc: 0.3946
+(2922, 4, 4, 12) (2922,)
+Train on 2775 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1455 - acc: 0.4126 - val_loss: 1.1241 - val_acc: 0.4694
+Epoch 2/2
+0s - loss: 1.1371 - acc: 0.4151 - val_loss: 1.1175 - val_acc: 0.4898
+(2934, 4, 4, 12) (2934,)
+Train on 2787 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1299 - acc: 0.4055 - val_loss: 1.1074 - val_acc: 0.3946
+Epoch 2/2
+0s - loss: 1.1214 - acc: 0.4227 - val_loss: 1.1033 - val_acc: 0.4286
+(2954, 4, 4, 12) (2954,)
+Train on 2806 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1100 - acc: 0.4202 - val_loss: 1.1142 - val_acc: 0.4730
+Epoch 2/2
+0s - loss: 1.1013 - acc: 0.4301 - val_loss: 1.1237 - val_acc: 0.4797
+(2892, 4, 4, 12) (2892,)
+Train on 2747 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1269 - acc: 0.4063 - val_loss: 1.0959 - val_acc: 0.4690
+Epoch 2/2
+0s - loss: 1.1175 - acc: 0.4132 - val_loss: 1.0977 - val_acc: 0.4345
+(2923, 4, 4, 12) (2923,)
+Train on 2776 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1096 - acc: 0.4305 - val_loss: 1.1091 - val_acc: 0.4966
+Epoch 2/2
+0s - loss: 1.0997 - acc: 0.4326 - val_loss: 1.0954 - val_acc: 0.5374
+(2956, 4, 4, 12) (2956,)
+Train on 2808 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1410 - acc: 0.4046 - val_loss: 1.0949 - val_acc: 0.4392
+Epoch 2/2
+0s - loss: 1.1289 - acc: 0.4195 - val_loss: 1.0946 - val_acc: 0.4257
+(2904, 4, 4, 12) (2904,)
+Train on 2758 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1213 - acc: 0.3978 - val_loss: 1.0934 - val_acc: 0.4384
+Epoch 2/2
+0s - loss: 1.1100 - acc: 0.3909 - val_loss: 1.0956 - val_acc: 0.4247
+(2932, 4, 4, 12) (2932,)
+Train on 2785 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1512 - acc: 0.3935 - val_loss: 1.0875 - val_acc: 0.3946
+Epoch 2/2
+0s - loss: 1.1415 - acc: 0.3957 - val_loss: 1.0874 - val_acc: 0.4082
+(2917, 4, 4, 12) (2917,)
+Train on 2771 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1265 - acc: 0.4060 - val_loss: 1.1901 - val_acc: 0.4452
+Epoch 2/2
+0s - loss: 1.1177 - acc: 0.4071 - val_loss: 1.1892 - val_acc: 0.4178
+(2984, 4, 4, 12) (2984,)
+Train on 2834 samples, validate on 150 samples
+Epoch 1/2
+0s - loss: 1.1615 - acc: 0.4044 - val_loss: 1.2533 - val_acc: 0.3133
+Epoch 2/2
+0s - loss: 1.1495 - acc: 0.4076 - val_loss: 1.2037 - val_acc: 0.3733
+(2903, 4, 4, 12) (2903,)
+Train on 2757 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1295 - acc: 0.4157 - val_loss: 1.0892 - val_acc: 0.4110
+Epoch 2/2
+0s - loss: 1.1211 - acc: 0.4218 - val_loss: 1.0887 - val_acc: 0.4110
+(2907, 4, 4, 12) (2907,)
+Train on 2761 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1213 - acc: 0.4053 - val_loss: 1.1129 - val_acc: 0.3973
+Epoch 2/2
+0s - loss: 1.1096 - acc: 0.4194 - val_loss: 1.1063 - val_acc: 0.3904
+(2914, 4, 4, 12) (2914,)
+Train on 2768 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1248 - acc: 0.4093 - val_loss: 1.2451 - val_acc: 0.3562
+Epoch 2/2
+0s - loss: 1.1186 - acc: 0.4176 - val_loss: 1.2311 - val_acc: 0.3630
+(2897, 4, 4, 12) (2897,)
+Train on 2752 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1242 - acc: 0.4033 - val_loss: 1.1181 - val_acc: 0.4483
+Epoch 2/2
+0s - loss: 1.1139 - acc: 0.4037 - val_loss: 1.1120 - val_acc: 0.5034
+(2926, 4, 4, 12) (2926,)
+Train on 2779 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1377 - acc: 0.3901 - val_loss: 1.1322 - val_acc: 0.3878
+Epoch 2/2
+0s - loss: 1.1264 - acc: 0.3940 - val_loss: 1.1315 - val_acc: 0.3878
+(2900, 4, 4, 12) (2900,)
+Train on 2755 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1303 - acc: 0.4000 - val_loss: 1.1417 - val_acc: 0.4069
+Epoch 2/2
+0s - loss: 1.1190 - acc: 0.4178 - val_loss: 1.1288 - val_acc: 0.4414
+(2932, 4, 4, 12) (2932,)
+Train on 2785 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1184 - acc: 0.3899 - val_loss: 1.1420 - val_acc: 0.4150
+Epoch 2/2
+0s - loss: 1.1101 - acc: 0.4122 - val_loss: 1.1447 - val_acc: 0.4150
+(2893, 4, 4, 12) (2893,)
+Train on 2748 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1272 - acc: 0.4148 - val_loss: 1.0912 - val_acc: 0.3931
+Epoch 2/2
+0s - loss: 1.1123 - acc: 0.4272 - val_loss: 1.0885 - val_acc: 0.3793
+(2919, 4, 4, 12) (2919,)
+Train on 2773 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1120 - acc: 0.4201 - val_loss: 1.1510 - val_acc: 0.3836
+Epoch 2/2
+0s - loss: 1.0984 - acc: 0.4342 - val_loss: 1.1495 - val_acc: 0.3562
+(3037, 4, 4, 12) (3037,)
+Train on 2885 samples, validate on 152 samples
+Epoch 1/2
+0s - loss: 1.1305 - acc: 0.4205 - val_loss: 1.1200 - val_acc: 0.4276
+Epoch 2/2
+0s - loss: 1.1195 - acc: 0.4142 - val_loss: 1.1112 - val_acc: 0.4013
+(2928, 4, 4, 12) (2928,)
+Train on 2781 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1468 - acc: 0.3826 - val_loss: 1.1036 - val_acc: 0.4150
+Epoch 2/2
+0s - loss: 1.1360 - acc: 0.3858 - val_loss: 1.0908 - val_acc: 0.4286
+(2967, 4, 4, 12) (2967,)
+Train on 2818 samples, validate on 149 samples
+Epoch 1/2
+0s - loss: 1.1152 - acc: 0.4067 - val_loss: 1.0840 - val_acc: 0.4161
+Epoch 2/2
+0s - loss: 1.1108 - acc: 0.4230 - val_loss: 1.0681 - val_acc: 0.4564
+(2979, 4, 4, 12) (2979,)
+Train on 2830 samples, validate on 149 samples
+Epoch 1/2
+0s - loss: 1.1294 - acc: 0.4011 - val_loss: 1.1390 - val_acc: 0.4228
+Epoch 2/2
+0s - loss: 1.1167 - acc: 0.4102 - val_loss: 1.1358 - val_acc: 0.3893
+(2912, 4, 4, 12) (2912,)
+Train on 2766 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1327 - acc: 0.4082 - val_loss: 1.1364 - val_acc: 0.3630
+Epoch 2/2
+0s - loss: 1.1222 - acc: 0.4187 - val_loss: 1.1295 - val_acc: 0.3630
+(2888, 4, 4, 12) (2888,)
+Train on 2743 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1470 - acc: 0.3945 - val_loss: 1.1642 - val_acc: 0.3655
+Epoch 2/2
+0s - loss: 1.1358 - acc: 0.4036 - val_loss: 1.1603 - val_acc: 0.3655
+(2941, 4, 4, 12) (2941,)
+Train on 2793 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1197 - acc: 0.4157 - val_loss: 1.1289 - val_acc: 0.3919
+Epoch 2/2
+0s - loss: 1.1080 - acc: 0.4211 - val_loss: 1.1310 - val_acc: 0.3446
+(2906, 4, 4, 12) (2906,)
+Train on 2760 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1296 - acc: 0.4174 - val_loss: 1.0995 - val_acc: 0.4178
+Epoch 2/2
+0s - loss: 1.1175 - acc: 0.4170 - val_loss: 1.0923 - val_acc: 0.4315
+(2907, 4, 4, 12) (2907,)
+Train on 2761 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1076 - acc: 0.4122 - val_loss: 1.1040 - val_acc: 0.5000
+Epoch 2/2
+0s - loss: 1.0996 - acc: 0.4245 - val_loss: 1.1123 - val_acc: 0.4863
+(3054, 4, 4, 12) (3054,)
+Train on 2901 samples, validate on 153 samples
+Epoch 1/2
+0s - loss: 1.1174 - acc: 0.4181 - val_loss: 1.0681 - val_acc: 0.4379
+Epoch 2/2
+0s - loss: 1.1067 - acc: 0.4219 - val_loss: 1.0663 - val_acc: 0.4510
+(2904, 4, 4, 12) (2904,)
+Train on 2758 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1342 - acc: 0.3978 - val_loss: 1.1234 - val_acc: 0.4521
+Epoch 2/2
+0s - loss: 1.1220 - acc: 0.4028 - val_loss: 1.1345 - val_acc: 0.3973
+(2924, 4, 4, 12) (2924,)
+Train on 2777 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1267 - acc: 0.4159 - val_loss: 1.0784 - val_acc: 0.4626
+Epoch 2/2
+0s - loss: 1.1169 - acc: 0.4310 - val_loss: 1.0727 - val_acc: 0.4558
+(2872, 4, 4, 12) (2872,)
+Train on 2728 samples, validate on 144 samples
+Epoch 1/2
+0s - loss: 1.1083 - acc: 0.4194 - val_loss: 1.2021 - val_acc: 0.3819
+Epoch 2/2
+0s - loss: 1.0963 - acc: 0.4157 - val_loss: 1.2008 - val_acc: 0.3819
+(2943, 4, 4, 12) (2943,)
+Train on 2795 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1426 - acc: 0.3882 - val_loss: 1.1417 - val_acc: 0.3919
+Epoch 2/2
+0s - loss: 1.1300 - acc: 0.4054 - val_loss: 1.1300 - val_acc: 0.4189
+(2917, 4, 4, 12) (2917,)
+Train on 2771 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1441 - acc: 0.3948 - val_loss: 1.1547 - val_acc: 0.4041
+Epoch 2/2
+0s - loss: 1.1328 - acc: 0.3937 - val_loss: 1.1565 - val_acc: 0.3904
+(2966, 4, 4, 12) (2966,)
+Train on 2817 samples, validate on 149 samples
+Epoch 1/2
+0s - loss: 1.1304 - acc: 0.4146 - val_loss: 1.1842 - val_acc: 0.4497
+Epoch 2/2
+0s - loss: 1.1212 - acc: 0.4182 - val_loss: 1.1715 - val_acc: 0.4430
+(2937, 4, 4, 12) (2937,)
+Train on 2790 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1045 - acc: 0.4151 - val_loss: 1.0949 - val_acc: 0.4082
+Epoch 2/2
+0s - loss: 1.0884 - acc: 0.4330 - val_loss: 1.0956 - val_acc: 0.4082
+(2992, 4, 4, 12) (2992,)
+Train on 2842 samples, validate on 150 samples
+Epoch 1/2
+0s - loss: 1.1012 - acc: 0.4173 - val_loss: 1.1071 - val_acc: 0.4333
+Epoch 2/2
+0s - loss: 1.0915 - acc: 0.4148 - val_loss: 1.0929 - val_acc: 0.4333
+(2978, 4, 4, 12) (2978,)
+Train on 2829 samples, validate on 149 samples
+Epoch 1/2
+0s - loss: 1.1224 - acc: 0.4047 - val_loss: 1.0997 - val_acc: 0.3893
+Epoch 2/2
+0s - loss: 1.1134 - acc: 0.4076 - val_loss: 1.0877 - val_acc: 0.4161
+(2910, 4, 4, 12) (2910,)
+Train on 2764 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1054 - acc: 0.4345 - val_loss: 1.1151 - val_acc: 0.4726
+Epoch 2/2
+0s - loss: 1.0939 - acc: 0.4363 - val_loss: 1.1009 - val_acc: 0.4795
+(2933, 4, 4, 12) (2933,)
+Train on 2786 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1221 - acc: 0.4149 - val_loss: 1.0984 - val_acc: 0.3946
+Epoch 2/2
+0s - loss: 1.1115 - acc: 0.4210 - val_loss: 1.1031 - val_acc: 0.4558
+(2945, 4, 4, 12) (2945,)
+Train on 2797 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1451 - acc: 0.4040 - val_loss: 1.1633 - val_acc: 0.3378
+Epoch 2/2
+0s - loss: 1.1362 - acc: 0.4076 - val_loss: 1.1613 - val_acc: 0.3851
+(2970, 4, 4, 12) (2970,)
+Train on 2821 samples, validate on 149 samples
+Epoch 1/2
+0s - loss: 1.1208 - acc: 0.4172 - val_loss: 1.1456 - val_acc: 0.4094
+Epoch 2/2
+0s - loss: 1.1098 - acc: 0.4293 - val_loss: 1.1414 - val_acc: 0.4161
+(2917, 4, 4, 12) (2917,)
+Train on 2771 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1217 - acc: 0.4183 - val_loss: 1.0755 - val_acc: 0.4863
+Epoch 2/2
+0s - loss: 1.1114 - acc: 0.4211 - val_loss: 1.0639 - val_acc: 0.5137
+(2890, 4, 4, 12) (2890,)
+Train on 2745 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1210 - acc: 0.4197 - val_loss: 1.1189 - val_acc: 0.3862
+Epoch 2/2
+0s - loss: 1.1050 - acc: 0.4353 - val_loss: 1.1089 - val_acc: 0.4069
+(3011, 4, 4, 12) (3011,)
+Train on 2860 samples, validate on 151 samples
+Epoch 1/2
+0s - loss: 1.1214 - acc: 0.4115 - val_loss: 1.1710 - val_acc: 0.4305
+Epoch 2/2
+0s - loss: 1.1083 - acc: 0.4273 - val_loss: 1.1682 - val_acc: 0.4503
+(2911, 4, 4, 12) (2911,)
+Train on 2765 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1208 - acc: 0.4318 - val_loss: 1.1125 - val_acc: 0.4041
+Epoch 2/2
+0s - loss: 1.1117 - acc: 0.4362 - val_loss: 1.1066 - val_acc: 0.4110
+(2963, 4, 4, 12) (2963,)
+Train on 2814 samples, validate on 149 samples
+Epoch 1/2
+0s - loss: 1.1245 - acc: 0.4076 - val_loss: 1.1003 - val_acc: 0.3289
+Epoch 2/2
+0s - loss: 1.1138 - acc: 0.4172 - val_loss: 1.1059 - val_acc: 0.3289
+(2897, 4, 4, 12) (2897,)
+Train on 2752 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1298 - acc: 0.4077 - val_loss: 1.1041 - val_acc: 0.3655
+Epoch 2/2
+0s - loss: 1.1163 - acc: 0.4190 - val_loss: 1.1008 - val_acc: 0.3793
+(2896, 4, 4, 12) (2896,)
+Train on 2751 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1301 - acc: 0.4369 - val_loss: 1.1441 - val_acc: 0.4690
+Epoch 2/2
+0s - loss: 1.1205 - acc: 0.4482 - val_loss: 1.1396 - val_acc: 0.4828
+(2938, 4, 4, 12) (2938,)
+Train on 2791 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.0930 - acc: 0.4149 - val_loss: 1.0866 - val_acc: 0.3946
+Epoch 2/2
+0s - loss: 1.0820 - acc: 0.4228 - val_loss: 1.0896 - val_acc: 0.3537
+(2925, 4, 4, 12) (2925,)
+Train on 2778 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1182 - acc: 0.4186 - val_loss: 1.1461 - val_acc: 0.4354
+Epoch 2/2
+0s - loss: 1.1047 - acc: 0.4284 - val_loss: 1.1400 - val_acc: 0.4626
+(2883, 4, 4, 12) (2883,)
+Train on 2738 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1046 - acc: 0.4226 - val_loss: 1.0887 - val_acc: 0.3793
+Epoch 2/2
+0s - loss: 1.0950 - acc: 0.4251 - val_loss: 1.0948 - val_acc: 0.3517
+(2892, 4, 4, 12) (2892,)
+Train on 2747 samples, validate on 145 samples
+Epoch 1/2
+0s - loss: 1.1127 - acc: 0.4088 - val_loss: 1.1228 - val_acc: 0.4414
+Epoch 2/2
+0s - loss: 1.1040 - acc: 0.4103 - val_loss: 1.1241 - val_acc: 0.4483
+(2925, 4, 4, 12) (2925,)
+Train on 2778 samples, validate on 147 samples
+Epoch 1/2
+0s - loss: 1.1345 - acc: 0.4154 - val_loss: 1.1494 - val_acc: 0.3946
+Epoch 2/2
+0s - loss: 1.1244 - acc: 0.4129 - val_loss: 1.1510 - val_acc: 0.3810
+(2914, 4, 4, 12) (2914,)
+Train on 2768 samples, validate on 146 samples
+Epoch 1/2
+0s - loss: 1.1282 - acc: 0.4292 - val_loss: 1.1940 - val_acc: 0.3973
+Epoch 2/2
+0s - loss: 1.1166 - acc: 0.4274 - val_loss: 1.1953 - val_acc: 0.3836
+(2957, 4, 4, 12) (2957,)
+Train on 2809 samples, validate on 148 samples
+Epoch 1/2
+0s - loss: 1.1131 - acc: 0.4254 - val_loss: 1.1488 - val_acc: 0.3919
+E

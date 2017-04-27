@@ -33,6 +33,8 @@ board_size = 4 # Testing
 handcrafted_features = False
 input_size = board_size * board_size
 channel_size = 12
+not_changed = True
+top_layer_checks = 6
 
 def create_model(supervised = False,finetuning = False, old_model = None):
     # if (read_model):
@@ -63,7 +65,7 @@ def create_model(supervised = False,finetuning = False, old_model = None):
         model.add(Dense(32, init='uniform', activation='relu', trainable= not finetuning, name = 'fc1'))
         model.add(Dense(16, init='uniform', activation='relu', trainable= not finetuning, name = 'fc2'))
         model.add(Dense(4, init='uniform'))
-        model.compile(loss='mean_squared_error', optimizer='adam')
+        model.compile(loss='mean_squared_error', optimizer='rmsprop')
         model.get_layer('conv1').set_weights(old_model.get_layer('conv1').get_weights())
         model.get_layer('conv2').set_weights(old_model.get_layer('conv2').get_weights())
         model.get_layer('fc1').set_weights(old_model.get_layer('fc1').get_weights())
@@ -220,6 +222,9 @@ if __name__ == '__main__':
 
     # Supervised part
     supervised_model = create_model(True, False, None)
+    supervised_runs = 0
+    new_loss = 0.0
+    old_loss = -np.inf
 
     while(1):
         states, labels = simulation(0)
@@ -231,12 +236,17 @@ if __name__ == '__main__':
 
         permutation = np.random.permutation(states.shape[0])
 
-        supervised_model.fit(states[permutation], np.eye(4)[labels[permutation].astype('int')], batch_size=256, nb_epoch=2, validation_split=0.05, verbose=2)
+        history = supervised_model.fit(states[permutation], np.eye(4)[labels[permutation].astype('int')], batch_size=256, nb_epoch=2, validation_split=0.05, verbose=0)
+        supervised_runs += 1
 
-        # Todo
         # Stopping condition
-        if (True):
-            break
+        if (supervised_runs % validation_timeout_runs == 0):
+            if (new_loss - old_loss < 1.0):
+                break
+            old_loss = new_loss
+            new_loss = 0.0
+            
+        new_loss += history.history['val_loss'][0] + history.history['val_loss'][1]
 
     # RL Part
     replays = Replays(replay_size, replay_iters)
@@ -253,8 +263,15 @@ if __name__ == '__main__':
 
     iters = 0
     prev_iters  = 0
+    old_loss = -np.inf
+    new_loss = 0.0
+    top_layer_trained = False
 
     while(1):
+
+        if (runs % save_stops == 0):
+            filename = 'sim_' + str(folder_num) + '/model_{}'.format(runs/save_stops)
+            dqn.save_model('models/{}'.format(filename))
 
         game = Env(False, board_size)
         agent = Agent(game,handcrafted_features)
@@ -296,17 +313,21 @@ if __name__ == '__main__':
             init_state = np.copy(next_state)
             init_act = dqn.select_epsilon_greedy(init_state)
 
-        if (runs % save_stops == 0):
-            filename = 'sim_' + str(folder_num) + '/model_{}'.format(runs/save_stops)
-            dqn.save_model('models/{}'.format(filename))
-
         if (test_on_holdout and runs % validation_timeout_runs == 0):
             loss, Q_val = dqn.evaluate()
             print "Metrics:", loss, ",",  Q_val[0]
+            
+            if(not_changed):
+                if (runs % (top_layer_checks * validation_timeout_runs) == 0 and runs > 0):
+                    if (new_loss - old_loss < 0.06):
+                        top_layer_trained = True
+                    old_loss = new_loss
+                    new_loss = 0.0
+                
+                new_loss += loss
 
-        # TODO
-        # If sufficiently trained, unfreeze previous layers
-        if (False):
+        if (top_layer_trained and not_changed):
             dqn.model = create_model(False, False, dqn.model)
             dqn.target_model = create_model(False, False, dqn.model)
             dqn.copy_to_target_model()
+            not_changed = False
