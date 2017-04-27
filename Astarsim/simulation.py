@@ -83,7 +83,7 @@ def simulation(idx):
           grid_arr[i][j] = 1
 
     # print np.eye(12)[np.log2(grid_arr.astype('float')).astype(int)]
-    if (states == None):
+    if (states is None):
       states = [np.eye(12)[np.log2(grid_arr.astype('float')).astype(int)]]
     else :
       states = np.append(states, [np.eye(12)[np.log2(grid_arr.astype('float')).astype(int)]], axis = 0)
@@ -99,6 +99,8 @@ def simulation(idx):
     #time.sleep(0.03)
     if gm.isWin():
       return states, ret_vals
+
+  return states, ret_vals
 
 def Main(args):
   while(1):

@@ -29,8 +29,8 @@ holdout_size = 512
 validation_timeout_runs = 50 #runs
 board_size = 3
 capped_rewards = True
-handcrafted_features = False
-input_size = board_size * board_size #+ 4
+handcrafted_features = True
+input_size = board_size * board_size + 4
 
 class Replays(object):
 
