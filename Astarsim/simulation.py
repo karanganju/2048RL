@@ -35,21 +35,10 @@ ITERATION = 100
 
 from game2048 import GameManager
 
-class Dummy:
-  def write(self, s):
-    pass
-  def flush(self):
-    pass
 
-remain = multiprocessing.Value('i')
-timeout_count = multiprocessing.Value('i')
 def simulation(idx):
   states = None
   ret_vals = np.array([])
-
-  random.seed(idx)
-  if idx > 0:
-    sys.stdout = Dummy()
 
   gm = GameManager()
 
@@ -71,7 +60,9 @@ def simulation(idx):
       sys.stderr.write('stale idx=%d\n' % idx)
       assert 0
       timeout_count.value = -99999
+
     nextKey = gm.ai.getNextMove(grid)
+    
     # if t1 - t0 > 0.1:
     #   timeout_count.value += 1
     #   sys.stderr.write('t %f, count=%d\n' % (t1 - t0, timeout_count.value))
@@ -84,10 +75,11 @@ def simulation(idx):
 
     # print np.eye(12)[np.log2(grid_arr.astype('float')).astype(int)]
     if (states is None):
-      states = [np.eye(12)[np.log2(grid_arr.astype('float')).astype(int)]]
+      states = [np.reshape(np.log2(np.transpose(grid_arr).astype('float')).astype(int), [4, 4, 1])]
     else :
-      states = np.append(states, [np.eye(12)[np.log2(grid_arr.astype('float')).astype(int)]], axis = 0)
+      states = np.append(states, [np.reshape(np.log2(np.transpose(grid_arr).astype('float')).astype(int), [4, 4, 1])], axis = 0)
     ret_vals = np.append(ret_vals, np.array([K_CODE2[nextKey]]))
+    
 
     gm.pressKey(KEY_CODE[nextKey])
     # gm.board.show()
