@@ -185,6 +185,7 @@ class Agent(object):
 
 	def take_step(self, step):
 		prev_score = self.env.score
+		prev_max = self.env.max
 		# if (step == 0):
 		# 	print "Up"
 		# elif (step == 1):
@@ -201,10 +202,12 @@ class Agent(object):
 		elif (self.env.game_won):
 			self.game_status = 1
 
-		return self.game_status, self.reward_formulation(prev_score)
+		return self.game_status, self.reward_formulation(prev_score, prev_max)
 
-	def reward_formulation(self, prev_score):
+	def reward_formulation(self, prev_score, prev_max):
 		reward = self.env.score - prev_score
+		if (self.env.max > prev_max and self.env.max > 64):
+			return 1.0
 		if (reward >= 512):
 			reward = 0.5
 		elif (reward >= 32):
@@ -212,7 +215,7 @@ class Agent(object):
 		elif (reward > 0):
 			reward = 0.1
 		if (self.game_status == 1):
-			reward = 1.0
+			reward = 2.0
 		elif (self.game_status == -1):
 			reward = -1.0
 		return reward
@@ -236,7 +239,7 @@ class Agent(object):
 
 		ret_arr = np.copy(self.env.array)
 		ret_arr[ret_arr == 0] = 1
-		return np.eye(12)[np.log2(ret_arr).astype(int)]
+		return np.reshape(np.log2(ret_arr).astype(int), [4, 4, 1])
 
 
 if __name__ == '__main__':

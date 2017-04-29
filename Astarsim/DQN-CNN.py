@@ -11,30 +11,53 @@ import sys, getopt
 import os, pickle
 from keras import backend as K
 from simulation import *
+import cPickle as cp
 
 # Hyperparams
 read_model = False
 read_model_index = 1
 discount = 0.99
-max_epsilon = 1
+max_epsilon = 0.6
 min_epsilon = 0.1
-replay_size = 2048*256
-replay_iters = 512
-bsize = 512
-save_stops = 150 #runs
+replay_size = 2048*1024
+replay_iters = 256
+bsize = 256
+save_stops = 50 #runs
 runs = 0
 runs_to_min_epsilon = 2048 #runs
 copy_to_target_timeout = 2048 #steps
 replay_start_train = 4096*2 #steps
 test_on_holdout = True
 holdout_size = 512
-validation_timeout_runs = 50 #runs
+validation_timeout_runs = 20 #runs
 board_size = 4 # Testing
 handcrafted_features = False
 input_size = board_size * board_size
-channel_size = 12
+channel_size = 1
 not_changed = True
-top_layer_checks = 6
+top_layer_checks = 1
+SL_states = None
+SL_labels = None
+
+def generator(batch_size):
+    # Create empty arrays to contain batch of features and labels#
+    if (SL_states is None or SL_labels is None):
+        raise ValueError('SL_states not available!')
+    
+    batch_states = None
+    batch_labels = None
+
+    while True:
+        elems, counts = np.unique(np.random.randint(10, size=batch_size), return_counts=True)
+        for i in xrange(len(elems)):
+            samples = np.random.randint(np.shape(SL_states[elems[i]])[0], size=counts[i])
+            if (batch_states is None):
+                batch_states = SL_states[elems[i]][samples]
+                batch_labels = SL_labels[elems[i]][samples]
+            else :
+                batch_states = np.append(batch_states, SL_states[elems[i]][samples], axis=0)
+                batch_labels = np.append(batch_labels, SL_labels[elems[i]][samples])
+        yield batch_states, np.eye(4)[batch_labels.astype('int')]
 
 def create_model(supervised = False,finetuning = False, old_model = None):
     # if (read_model):
@@ -54,7 +77,7 @@ def create_model(supervised = False,finetuning = False, old_model = None):
         model.add(Dense(32, init='uniform', activation='relu', name = 'fc1'))
         model.add(Dense(16, init='uniform', activation='relu', name = 'fc2'))
         model.add(Dense(4, init='uniform', activation='softmax'))
-        model.compile(loss='categorical_crossentropy', optimizer="adam")
+        model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
         return model
     elif (supervised == False and not old_model is None):
         model = Sequential()
@@ -105,6 +128,7 @@ class Replays(object):
         return ret_s, ret_a, ret_r, ret_s_new
 
     def add_instance(self, init_state, action, reward, next_state):
+        
         self.iter = self.iter+1
         if (self.iter == self.cap):
             self.filled = True
@@ -113,6 +137,7 @@ class Replays(object):
         self.s_new[self.iter] = next_state
         self.r[self.iter] = reward
         self.a[self.iter] = action
+
 
 class DQN(object):
 
@@ -134,7 +159,7 @@ class DQN(object):
                 y[replay_iter] = self.model.predict(s[replay_iter].reshape([1, board_size, board_size, channel_size]))
                 y[replay_iter][a[replay_iter]] = r[replay_iter] + discount * self.Q_max_from_target(sim_state)
 
-            self.model.fit(s, y, nb_epoch=10, batch_size=bsize, verbose=0)
+            self.model.fit(s, y, nb_epoch=1, batch_size=bsize, verbose=0)
             # print self.model.get_weights()[0][0]
             # print "END"
 
@@ -226,27 +251,10 @@ if __name__ == '__main__':
     new_loss = 0.0
     old_loss = -np.inf
 
-    while(1):
-        states, labels = simulation(0)
+    SL_states, SL_labels = cp.load(open('SL_data_sorted','rb'))
 
-        for i in xrange(2):
-            x, y = simulation(0)
-            states = np.append(states, x, axis = 0)
-            labels = np.append(labels, y)
-
-        permutation = np.random.permutation(states.shape[0])
-
-        history = supervised_model.fit(states[permutation], np.eye(4)[labels[permutation].astype('int')], batch_size=256, nb_epoch=2, validation_split=0.05, verbose=0)
-        supervised_runs += 1
-
-        # Stopping condition
-        if (supervised_runs % validation_timeout_runs == 0):
-            if (new_loss - old_loss < 1.0):
-                break
-            old_loss = new_loss
-            new_loss = 0.0
-            
-        new_loss += history.history['val_loss'][0] + history.history['val_loss'][1]
+    # history = supervised_model.fit(states, np.eye(4)[labels.astype('int')], batch_size=256, nb_epoch=1, validation_split=0.1, verbose=2, shuffle=True, callbacks=[keras.callbacks.EarlyStopping(min_delta=0.01, patience=5), keras.callbacks.ProgbarLogger()])
+    history = supervised_model.fit_generator(generator(bsize), samples_per_epoch=4096, nb_epoch=128, verbose=2, validation_data=generator(bsize), nb_val_samples=4, callbacks=[keras.callbacks.EarlyStopping(min_delta=0.01, patience=5), keras.callbacks.ProgbarLogger()])
 
     # RL Part
     replays = Replays(replay_size, replay_iters)
@@ -298,7 +306,7 @@ if __name__ == '__main__':
 
             # Add data to mini-batch only if next state is different
             if (next_state != init_state).any():
-                replays.add_instance(init_state, init_act, reward, next_state) 
+                replays.add_instance(init_state, init_act, reward, next_state)
 
             # Run through replay
             dqn.run_through_replay()
@@ -315,11 +323,11 @@ if __name__ == '__main__':
 
         if (test_on_holdout and runs % validation_timeout_runs == 0):
             loss, Q_val = dqn.evaluate()
-            print "Metrics:", loss, ",",  Q_val[0]
+            print "Metrics (RL):", loss, ",",  Q_val[0]
             
             if(not_changed):
                 if (runs % (top_layer_checks * validation_timeout_runs) == 0 and runs > 0):
-                    if (new_loss - old_loss < 0.06):
+                    if (new_loss - old_loss < 0.01):
                         top_layer_trained = True
                     old_loss = new_loss
                     new_loss = 0.0
@@ -331,3 +339,4 @@ if __name__ == '__main__':
             dqn.target_model = create_model(False, False, dqn.model)
             dqn.copy_to_target_model()
             not_changed = False
+            runs = 0
