@@ -15,9 +15,9 @@ import cPickle as cp
 
 # Hyperparams
 read_model = False
-read_model_index = 1
+read_model_index = "sim_default/model_SL_augmax_bn_conv_large_actual"
 discount = 0.99
-max_epsilon = 0.6
+max_epsilon = 0.4
 min_epsilon = 0.1
 replay_size = 2048*1024
 replay_iters = 256
@@ -60,39 +60,46 @@ def generator(batch_size):
         yield batch_states, np.eye(4)[batch_labels.astype('int')]
 
 def create_model(supervised = False,finetuning = False, old_model = None):
-    # if (read_model):
-    #     json_file = open("models/model_"+ str(read_model_index) +".json", 'r')
-    #     loaded_model_json = json_file.read()
-    #     json_file.close()
-    #     model = model_from_json(loaded_model_json)
-    #     # load weights into new model
-    #     model.load_weights("models/model_"+ str(read_model_index) +".h5")
-    # else:
     if (old_model is None and supervised == True):
-        model = Sequential()
-        model.add(Conv2D(64, 3, 3, activation='relu', input_shape=(board_size, board_size, channel_size), init='uniform', border_mode='same', name = 'conv1'))
-        model.add(Conv2D(64, 3, 3, init='uniform', activation='relu', border_mode='same', name = 'conv2'))
-        model.add(Flatten())
-
-        model.add(Dense(32, init='uniform', activation='relu', name = 'fc1'))
-        model.add(Dense(16, init='uniform', activation='relu', name = 'fc2'))
-        model.add(Dense(4, init='uniform', activation='softmax'))
-        model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
+        json_file = open("models/"+ str(read_model_index) +".json", 'r')
+        loaded_model_json = json_file.read()
+        json_file.close()
+        model = model_from_json(loaded_model_json)
+        model.load_weights("models/" + str(read_model_index) +".h5")
         return model
     elif (supervised == False and not old_model is None):
         model = Sequential()
-        model.add(Conv2D(64, 3, 3, activation='relu', input_shape=(board_size, board_size, channel_size), init='uniform', border_mode='same', trainable= not finetuning, name = 'conv1'))
-        model.add(Conv2D(64, 3, 3, init='uniform', activation='relu', border_mode='same', trainable= not finetuning, name = 'conv2'))
-        model.add(Flatten(trainable= not finetuning))
-
-        model.add(Dense(32, init='uniform', activation='relu', trainable= not finetuning, name = 'fc1'))
-        model.add(Dense(16, init='uniform', activation='relu', trainable= not finetuning, name = 'fc2'))
+        model.add(Conv2D(128, 3, 3, border_mode='same', init='uniform', name = 'conv1', input_shape=(board_size, board_size, channel_size), trainable = not finetuning))
+        model.add(BatchNormalization(name = 'bn1', trainable = not finetuning))
+        model.add(Activation('relu', name = 'rl1', trainable = not finetuning))
+        model.add(Conv2D(64, 3, 3, border_mode='same', init='uniform', name = 'conv2', trainable = not finetuning))
+        model.add(BatchNormalization(name = 'bn2', trainable = not finetuning))
+        model.add(Activation('relu', name = 'rl2', trainable = not finetuning))
+        model.add(Flatten(name = 'fl', trainable = not finetuning))
+        model.add(Dense(64, init='uniform', name = 'fc1', trainable = not finetuning))
+        model.add(BatchNormalization(name = 'bn3', trainable = not finetuning))
+        model.add(Activation('relu', name = 'rl3', trainable = not finetuning))
+        model.add(Dense(32, init='uniform', name = 'fc2', trainable = not finetuning))
+        model.add(BatchNormalization(name = 'bn4', trainable = not finetuning))
+        model.add(Activation('relu', name = 'rl4', trainable = not finetuning))
+        model.add(Dense(16, init='uniform', name = 'fc3'))
+        model.add(BatchNormalization(name = 'bn5'))
+        model.add(Activation('relu', name = 'rl5'))
         model.add(Dense(4, init='uniform'))
-        model.compile(loss='mean_squared_error', optimizer='rmsprop')
+        model.compile(loss='mean_squared_error', optimizer='rmsprop', metrics=['accuracy'])
+
         model.get_layer('conv1').set_weights(old_model.get_layer('conv1').get_weights())
+        model.get_layer('bn1').set_weights(old_model.get_layer('bn1').get_weights())
+        model.get_layer('rl1').set_weights(old_model.get_layer('rl1').get_weights())
         model.get_layer('conv2').set_weights(old_model.get_layer('conv2').get_weights())
+        model.get_layer('bn2').set_weights(old_model.get_layer('bn2').get_weights())
+        model.get_layer('rl2').set_weights(old_model.get_layer('rl2').get_weights())
         model.get_layer('fc1').set_weights(old_model.get_layer('fc1').get_weights())
+        model.get_layer('bn3').set_weights(old_model.get_layer('bn3').get_weights())
+        model.get_layer('rl3').set_weights(old_model.get_layer('rl3').get_weights())
         model.get_layer('fc2').set_weights(old_model.get_layer('fc2').get_weights())
+        model.get_layer('bn4').set_weights(old_model.get_layer('bn4').get_weights())
+        model.get_layer('rl4').set_weights(old_model.get_layer('rl4').get_weights())
         return model
 
 class Replays(object):
@@ -234,7 +241,7 @@ def fill_val_set(val_set):
 
 if __name__ == '__main__':
     grad_desc_lr = 0.001
-    folder_num = "default"
+    folder_num = "RL"
     opts, args = getopt.getopt(sys.argv[1:],"i:l:s:",[])
     for opt, arg in opts:
         if opt == '-i':
@@ -251,10 +258,25 @@ if __name__ == '__main__':
     new_loss = 0.0
     old_loss = -np.inf
 
-    SL_states, SL_labels = cp.load(open('SL_data_sorted','rb'))
+    # SL_states, SL_labels = cp.load(open('SL_data_sorted','rb'))
 
-    # history = supervised_model.fit(states, np.eye(4)[labels.astype('int')], batch_size=256, nb_epoch=1, validation_split=0.1, verbose=2, shuffle=True, callbacks=[keras.callbacks.EarlyStopping(min_delta=0.01, patience=5), keras.callbacks.ProgbarLogger()])
-    history = supervised_model.fit_generator(generator(bsize), samples_per_epoch=4096, nb_epoch=128, verbose=2, validation_data=generator(bsize), nb_val_samples=4, callbacks=[keras.callbacks.EarlyStopping(min_delta=0.01, patience=5), keras.callbacks.ProgbarLogger()])
+    # # history = supervised_model.fit(states, np.eye(4)[labels.astype('int')], batch_size=256, nb_epoch=1, validation_split=0.1, verbose=2, shuffle=True, callbacks=[keras.callbacks.EarlyStopping(min_delta=0.01, patience=5), keras.callbacks.ProgbarLogger()])
+    # history = supervised_model.fit_generator(generator(64), samples_per_epoch=1024*512, nb_epoch=128, verbose=2, validation_data=generator(64), nb_val_samples=128, callbacks=[keras.callbacks.EarlyStopping(min_delta=0.001, patience=3), keras.callbacks.ProgbarLogger()])
+
+    # Save SL model
+    # filename = 'models/sim_' + str(folder_num) + '/model_SL'
+    # json_filename = "{}.json".format(filename)
+    # h5_filename = "{}.h5".format(filename)
+    # model_json = supervised_model.to_json()
+    # if not os.path.exists(os.path.dirname(json_filename)):
+    #     try:
+    #         os.makedirs(os.path.dirname(json_filename))
+    #     except OSError as exc: # Guard against race condition
+    #         if exc.errno != errno.EEXIST:
+    #             raise
+    # with open(json_filename, "w") as json_file:
+    #     json_file.write(model_json)
+    # supervised_model.save_weights(h5_filename)
 
     # RL Part
     replays = Replays(replay_size, replay_iters)
@@ -273,13 +295,9 @@ if __name__ == '__main__':
     prev_iters  = 0
     old_loss = -np.inf
     new_loss = 0.0
-    top_layer_trained = False
+    top_layer_trained = 0
 
     while(1):
-
-        if (runs % save_stops == 0):
-            filename = 'sim_' + str(folder_num) + '/model_{}'.format(runs/save_stops)
-            dqn.save_model('models/{}'.format(filename))
 
         game = Env(False, board_size)
         agent = Agent(game,handcrafted_features)
@@ -305,8 +323,21 @@ if __name__ == '__main__':
             next_state = agent.get_array()
 
             # Add data to mini-batch only if next state is different
-            if (next_state != init_state).any():
-                replays.add_instance(init_state, init_act, reward, next_state)
+            # if (next_state != init_state).any():
+            #     # Add all instances here.
+            #     elem_min = 12
+            #     elem_max = 0
+            #     for i in xrange(4):
+            #         for j in xrange(4):
+            #             if (init_state[i][j] < elem_min):
+            #                 elem_min = init_state[i][j]
+            #             if (init_state[i][j] > elem_max):
+            #                 elem_max = init_state[i][j]
+
+            #     state_0 = np.copy(init_state)
+            #     state_1 = np.copy(next_state)
+            #     for i in xrange(1-elem_min, 10-elem_max):
+            replays.add_instance(init_state, init_act, reward, next_state)
 
             # Run through replay
             dqn.run_through_replay()
@@ -321,22 +352,32 @@ if __name__ == '__main__':
             init_state = np.copy(next_state)
             init_act = dqn.select_epsilon_greedy(init_state)
 
-        if (test_on_holdout and runs % validation_timeout_runs == 0):
-            loss, Q_val = dqn.evaluate()
-            print "Metrics (RL):", loss, ",",  Q_val[0]
-            
-            if(not_changed):
-                if (runs % (top_layer_checks * validation_timeout_runs) == 0 and runs > 0):
-                    if (new_loss - old_loss < 0.01):
-                        top_layer_trained = True
-                    old_loss = new_loss
-                    new_loss = 0.0
-                
-                new_loss += loss
+        if (dqn.replays.filled or dqn.replays.iter >= replay_start_train):
 
-        if (top_layer_trained and not_changed):
-            dqn.model = create_model(False, False, dqn.model)
-            dqn.target_model = create_model(False, False, dqn.model)
-            dqn.copy_to_target_model()
-            not_changed = False
-            runs = 0
+            if (test_on_holdout and runs % validation_timeout_runs == 0):
+                loss, Q_val = dqn.evaluate()
+                print "Metrics (RL):", loss, ",",  Q_val[0]
+                
+                if(not_changed):
+                    if (runs % (top_layer_checks * validation_timeout_runs) == 0 and runs > 0):
+                        if (new_loss - old_loss < 0.01):
+                            top_layer_trained += 1
+                        else:
+                            top_layer_trained = 0
+                        old_loss = new_loss
+                        new_loss = 0.0
+                    
+                    new_loss += loss
+
+            if (top_layer_trained > 3 and not_changed):
+                dqn.model = create_model(False, False, dqn.model)
+                dqn.target_model = create_model(False, False, dqn.model)
+                dqn.copy_to_target_model()
+                not_changed = False
+                runs = 0
+                print "Unfreezing!"
+
+            if (runs % save_stops == 0):
+                filename = 'sim_' + str(folder_num) + '/model_{}'.format(runs/save_stops)
+                dqn.save_model('models/{}'.format(filename))
+

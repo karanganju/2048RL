@@ -169,11 +169,11 @@ class Env(object):
 			return -1
 
 	def print_state(self):
-		print "\n\n\nScore :", self.score
+		print "\n\nScore :", self.score
 		print "New State : "
 		print_table(self.array, self.len)
 		# print tabulate([self.array[0], self.array[1], self.array[2], self.array[3])
-		print "\n\n\n\n\n\n\n\n\n\n\n"
+		print "\n\n"
 
 class Agent(object):
 
@@ -206,6 +206,10 @@ class Agent(object):
 
 	def reward_formulation(self, prev_score, prev_max):
 		reward = self.env.score - prev_score
+		if (self.game_status == 1):
+			reward = 2.0
+		elif (self.game_status == -1):
+			reward = -1.0
 		if (self.env.max > prev_max and self.env.max > 64):
 			return 1.0
 		if (reward >= 512):
@@ -214,10 +218,6 @@ class Agent(object):
 			reward = 0.3
 		elif (reward > 0):
 			reward = 0.1
-		if (self.game_status == 1):
-			reward = 2.0
-		elif (self.game_status == -1):
-			reward = -1.0
 		return reward
 
 	def get_array(self):
@@ -244,23 +244,29 @@ class Agent(object):
 
 if __name__ == '__main__':
 
-	game = Env(True,3);
-	agent = Agent(game);
-
 	while(1):
-		c = raw_input()
-		if (c == 'w'):
-			print agent.take_step(0)
-		elif (c == 'd'):
-			print agent.take_step(1)
-		elif (c == 's'):
-			print agent.take_step(2)
-		elif (c == 'a'):
-			print agent.take_step(3)
+		game = Env(False,4);
+		agent = Agent(game);
+		steps = 0
+
+		# while(1):
+		# 	c = raw_input()
+		# 	if (c == 'w'):
+		# 		print agent.take_step(0)
+		# 	elif (c == 'd'):
+		# 		print agent.take_step(1)
+		# 	elif (c == 's'):
+		# 		print agent.take_step(2)
+		# 	elif (c == 'a'):
+		# 		print agent.take_step(3)
 
 
-	# while(1):
-	# 	c = random.randrange(4)
-	# 	print
-	# 	agent.take_step(c)
+		while(1):
+			steps += 1
+			c = random.randrange(4)
+			print
+			state, reward = agent.take_step(c)
+			if (state != 0):
+				print '{0:6d} {1:5d} {2:5d}'.format(game.score, game.max, steps)
+				break
 
