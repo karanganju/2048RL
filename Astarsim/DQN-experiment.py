@@ -15,8 +15,18 @@ channel_size = 12
 
 if __name__ == '__main__':
     
-    while(1):
-    	states, labels = simulation(0)
+	SL_states, SL_labels = cp.load(open('SL_data_small_sorted','rb'))
+	states = SL_states[0]
+	labels = SL_labels[0]
+	for i in xrange(1,10):
+		states = np.append(states, SL_states[i], axis=0)
+		labels = np.append(labels, SL_labels[i])
+
+	state_label_concat = np.concatenate((np.reshape(states, [np.shape(states)[0], 16]), np.reshape(labels, [np.shape(states)[0], 1])), axis=1)
+
+	exit()
+    # while(1):
+    # 	states, labels = simulation(0)
     #     x, y = simulation(0)
     #     states = np.append(states, x, axis = 0)
     #     labels = np.append(labels, y)
