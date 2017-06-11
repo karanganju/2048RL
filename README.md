@@ -19,3 +19,7 @@ Garima Lalwani (glalwan2), Karan Ganju (kganju2) and Unnat Jain (uj2)
    * Double DQN
    * Dueling Network
    * Prioritized Replay
+   
+# Links
+* [Paper styled report](https://drive.google.com/open?id=0B9z_EPxFSXwKNkVHRGFEMUJKWUE)
+* [Class presentation](https://docs.google.com/presentation/d/1zb9cbbqk7D21_u9eLeZh3pn4ed0g7iQyFEEC1dsetDo/edit?pli=1#slide=id.g217848a8a2_0_19)
