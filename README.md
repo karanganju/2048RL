@@ -1,5 +1,7 @@
 # Team
-Garima Lalwani (glalwan2), Karan Ganju (kganju2) and Unnat Jain (uj2)    
+Garima Lalwani, Karan Ganju and Unnat Jain
+
+![Alt Text](https://unnat.github.io/files/2048.gif)
 
 # Issues
 
